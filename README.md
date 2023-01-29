@@ -27,5 +27,9 @@ so I hope to develop my own pomodoro timer application.
 
 This application is mainly focussed and targeted towards being used by
 students (like myself), especially towards high school and
-university students. 
+university students.
+
+## User stories
+
+- As a user, I want to be able to start and pause a timer. 
 

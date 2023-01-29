@@ -31,5 +31,5 @@ university students.
 
 ## User stories
 
-- As a user, I want to be able to start and pause a timer. 
+- As a user, I want to be able to start and pause the (pomodoro) timer. 
 

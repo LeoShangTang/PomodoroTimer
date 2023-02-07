@@ -8,31 +8,33 @@ public class Timer {
     private static int timerLongBreakTime = 5;
 
     // timeLeft will be in units of minutes
+    private String timerType; // type of timer like working timer or break timer...
     private int timeLeft;
     private boolean isTimerRunning;
-    private boolean isTimerJustCompleted;
+    private boolean isTimerJustCompleted; // think about it
 
-    public Timer(){
+    public Timer(int timeLeft, boolean isTimerRunning) {
+        this.timeLeft = timeLeft;
+        this.isTimerRunning = isTimerRunning;
+    }
+
+    public void timerRunning() {
 
     }
 
-    public void timerRunning(){
+    public void startTimer() {
 
     }
 
-    public void startTimer(){
+    public void pauseTimer() {
 
     }
 
-    public void pauseTimer(){
+    public void resumeTimer() {
 
     }
 
-    public void resumeTimer(){
-
-    }
-
-    public void alarm(){
+    public void alarm() {
 
     }
 

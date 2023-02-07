@@ -18,8 +18,16 @@ public class Timer {
         this.isTimerRunning = isTimerRunning;
     }
 
-    public void timerRunning() {
-
+    public void timerRunning() throws InterruptedException {
+        if (isTimerRunning == true) {
+            int x = timeLeft;
+            for (int i = x; i > 0; i--) {
+                timeLeft--;
+                System.out.println(timeLeft);
+                Thread.sleep(1000);
+            }
+        }
+        System.out.println("Timer done");
     }
 
     public void startTimer() {
@@ -27,11 +35,11 @@ public class Timer {
     }
 
     public void pauseTimer() {
-
+        isTimerRunning = false;
     }
 
     public void resumeTimer() {
-
+        isTimerRunning = true;
     }
 
     public void alarm() {

@@ -12,6 +12,7 @@ so I hope to develop my own pomodoro timer application.
 
 **My application will include customization features including:**
 
+- Allow users to add tasks to a queue with timer type and task name
 - Change timer times for breaks and working periods
 - Change the number of work periods required in order to get a longer break
 - Change background colors and/or image
@@ -31,5 +32,7 @@ university students.
 
 ## User stories
 
-- As a user, I want to be able to start and pause the (pomodoro) timer. 
+- As a user, I want to be able to add a task with timer type and task name to end of a queue
+- As a user, I want to be remove first task in queue
+- As a user, I want to be remove task at specific index in queue
 

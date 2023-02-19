@@ -35,4 +35,3 @@ university students.
 - As a user, I want to be able to add a task with timer type and task name to end of a queue
 - As a user, I want to be remove first task in queue
 - As a user, I want to be remove task at specific index in queue
-

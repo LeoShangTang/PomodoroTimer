@@ -32,6 +32,8 @@ university students.
 
 ## User stories
 
-- As a user, I want to be able to add a task with timer type and task name to end of a queue
-- As a user, I want to be remove first task in queue
+- As a user, I want to be able to add a task with timer type and task name to end of a queue 
+(adding arbitrary number of tasks to a queue or adding x to y part)
 - As a user, I want to be remove task at specific index in queue
+- As a user, I want to be able to change the number of times a task is repeated in the queue
+- 

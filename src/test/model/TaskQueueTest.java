@@ -40,7 +40,19 @@ public class TaskQueueTest {
 
     @Test
     public void testGetIndexOfTask() {
+        q1.addTask(t1);
+        assertEquals(0,q1.getIndexOfTask("Math"));
+        q1.addTask(t2);
+        assertEquals(1,q1.getIndexOfTask("Youtube"));
+        q1.addTask(t3);
+        assertEquals(2,q1.getIndexOfTask("Science"));
 
+        q2.addTask(t2);
+        assertEquals(0,q2.getIndexOfTask("Youtube"));
+        q2.addTask(t1);
+        assertEquals(1,q2.getIndexOfTask("Math"));
+        q2.addTask(t3);
+        assertEquals(2,q2.getIndexOfTask("Science"));
     }
 
     @Test
@@ -53,4 +65,6 @@ public class TaskQueueTest {
         q1.addTask(t3);
         assertEquals(3,q1.getQueueLength());
     }
+
+
 }

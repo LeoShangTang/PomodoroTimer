@@ -4,7 +4,8 @@ import model.Timer;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Timer p = new Timer(10,true);
-        p.timerRunning();
+        //Timer p = new Timer(10,true);
+        //p.timerRunning();
+        new TimerApp();
     }
 }

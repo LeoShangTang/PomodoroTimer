@@ -35,7 +35,30 @@ public class TaskQueueTest {
 
     @Test
     public void testRemoveTask() {
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
 
+        q2.addTask(t3);
+
+        assertEquals(3,q1.getQueueLength());
+        q1.removeTask("Math",1);
+        assertEquals(2,q1.getQueueLength());
+        q1.removeTask("Youtube",1);
+        assertEquals(2,q1.getQueueLength());
+        assertEquals(1,t2.getNumberOfTimes());
+        q1.removeTask("Science",6);
+        assertEquals(1,q1.getQueueLength());
+
+        // Testing removing Science with various numOfTimes
+        q2.removeTask("Science",3);
+        assertEquals(2,t3.getNumberOfTimes());
+        assertEquals(1,q2.getQueueLength());
+        q2.removeTask("Science",1);
+        assertEquals(1,t3.getNumberOfTimes());
+        assertEquals(1,q2.getQueueLength());
+        q2.removeTask("Science",3);
+        assertEquals(0,q2.getQueueLength());
     }
 
     @Test

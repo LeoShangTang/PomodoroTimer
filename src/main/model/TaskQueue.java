@@ -18,17 +18,18 @@ public class TaskQueue {
         this.taskQueue.addLast(task);
     }
 
-    // REQUIRES: numOfTimes < number of times that the task
+    // REQUIRES: numOfTimes < number of times that the task and taskName to be a valid taskName in list
     // MODIFIES: this, Task
     // EFFECTS: Removes numOfTimes by how many times the task is
-    // being repeated in the Queue. If numOfTimes is equivalent to
+    // being repeated in the Queue. If numOfTimes is equivalent or greater to
     // the number of times that the task is being repeated, remove task
     // from queue completely
-    public void removeTask(String task, int numOfTimes) {
+    public void removeTask(String taskName, int numOfTimes) {
         for (Task t : this.taskQueue) {
-            if (t.getTaskName() == task) {
-                if (numOfTimes == t.getNumberOfTimes()) {
+            if (t.getTaskName() == taskName) {
+                if (numOfTimes >= t.getNumberOfTimes()) {
                     this.taskQueue.remove(t);
+                    break;
                 } else {
                     t.changeNumberOfTimes(t.getNumberOfTimes() - numOfTimes);
                 }
@@ -50,5 +51,9 @@ public class TaskQueue {
     //EFFECT: Returns length of taskqueue
     public int getQueueLength() {
         return this.taskQueue.size();
+    }
+
+    public LinkedList<Task> getTaskQueue() {
+        return taskQueue;
     }
 }

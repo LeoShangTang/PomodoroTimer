@@ -26,7 +26,7 @@ public class TaskQueue {
     // from queue completely
     public void removeTask(String taskName, int numOfTimes) {
         for (Task t : this.taskQueue) {
-            if (t.getTaskName() == taskName) {
+            if (t.getTaskName().equals(taskName)) {
                 if (numOfTimes >= t.getNumberOfTimes()) {
                     this.taskQueue.remove(t);
                     break;
@@ -41,7 +41,7 @@ public class TaskQueue {
     //EFFECT: Takes taskName and returns the getNumberOfTimes of task with taskName
     public int retrieveRepetitions(String taskName) {
         for (Task t : this.taskQueue) {
-            if (t.getTaskName() == taskName) {
+            if (t.getTaskName().equals(taskName)) {
                 return t.getNumberOfTimes();
             }
         }
@@ -52,7 +52,7 @@ public class TaskQueue {
     //EFFECT: Takes task name and returns index in taskqueue
     public int getIndexOfTask(String task) {
         for (Task t : this.taskQueue) {
-            if (t.getTaskName() == task) {
+            if (t.getTaskName().equals(task)) {
                 return this.taskQueue.indexOf(t);
             }
         }

@@ -28,9 +28,10 @@ public class TimerApp {
     private void instructions() {
 
         System.out.println("\nInstructions (do not include brackets):");
-        System.out.println("\t[Print Queue] or [pq]  to print Queue");
-        System.out.println("\t[Add Task] or [at]  to add a task to Queue");
-        System.out.println("\t[Remove Task] or [rt]  to remove task in Queue");
+        System.out.println("\t[Print Queue] or [pq] to print Queue");
+        System.out.println("\t[Add Task] or [at] to add a task to Queue");
+        System.out.println("\t[Remove Task] or [rt] to remove task in Queue");
+        System.out.println("\t[Repititions] or [r] to retrieve number of times a task is being repeated");
         System.out.println("\t[Quit] or [q]  to remove task in Queue");
 
     }
@@ -52,6 +53,9 @@ public class TimerApp {
             } else if (chosen.equals("Remove Task") || chosen.equals("rt")) {
                 System.out.println("Removing Task");
                 removeTask();
+            } else if (chosen.equals("Repititions") || chosen.equals("r")) {
+                System.out.println("Retrieving repititions");
+                getRepititions();
             } else if (chosen.equals("Quit") || chosen.equals("q")) {
                 System.out.print("Going back to menu");
                 optionWindowRunning = false;
@@ -86,7 +90,7 @@ public class TimerApp {
             System.out.println("What is the timer type? (Break or Work)");
             String taskTimerInput = input.nextLine();
             System.out.println("How many times should the task be repeated?");
-            int taskRepetitionInput = Integer.parseInt(input.nextLine());
+            int taskRepetitionInput = Integer.valueOf(input.nextLine());
 
             Task task = new Task(taskNameInput, taskTimerInput, taskRepetitionInput);
             queue.addTask(task);
@@ -104,6 +108,7 @@ public class TimerApp {
         runTimer();
     }
 
+    //MODIFIES: this
     //EFFECTS: Removes task from queue
     private void removeTask() {
         Boolean removeTaskRunning = true;
@@ -113,7 +118,7 @@ public class TimerApp {
             System.out.println("Which task would you like to remove?");
             String taskNameInput = input.nextLine();
             System.out.println("How many times would you like to remove this task?");
-            int numOfTimes = Integer.parseInt(input.nextLine());
+            int numOfTimes = Integer.valueOf(input.nextLine());
             queue.removeTask(taskNameInput, numOfTimes);
 
             System.out.println("Would you like to remove another task? (yes or no)");
@@ -128,6 +133,15 @@ public class TimerApp {
         runTimer();
     }
 
+    //EFFECTS: User inputs task and retrieves number of repititions in that task
+    private void getRepititions() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Which task would you like to retrieve repititions?");
+        String taskNameInput = input.nextLine();
+        int result = queue.retrieveRepetitions(taskNameInput);
+        System.out.println(result);
+        runTimer();
+    }
 
     //EFFECTS: Initializes queue
     private void initQueue() {

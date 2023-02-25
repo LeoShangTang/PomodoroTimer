@@ -36,4 +36,4 @@ university students.
 (adding arbitrary number of tasks to a queue or adding x to y part)
 - As a user, I want to be remove task at specific index in queue
 - As a user, I want to be able to change the number of times a task is repeated in the queue
-- 
+- As a user, I want to be able to see the number of times a certain task is being repeated in the queue

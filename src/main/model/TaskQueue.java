@@ -38,6 +38,17 @@ public class TaskQueue {
     }
 
     //REQUIRES: task name must be a part of taskqueue
+    //EFFECT: Takes taskName and returns the getNumberOfTimes of task with taskName
+    public int retrieveRepetitions(String taskName) {
+        for (Task t : this.taskQueue) {
+            if (t.getTaskName() == taskName) {
+                return t.getNumberOfTimes();
+            }
+        }
+        return 0;
+    }
+
+    //REQUIRES: taskName must be a part of taskqueue
     //EFFECT: Takes task name and returns index in taskqueue
     public int getIndexOfTask(String task) {
         for (Task t : this.taskQueue) {

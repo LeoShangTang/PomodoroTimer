@@ -62,7 +62,7 @@ public class TimerApp {
         }
     }
 
-    //EFFECTS:
+    //EFFECTS: Prints the names of tasks in the queue
     private void printQueue() {
 
         for (Task t : queue.getTaskQueue()) {
@@ -71,15 +71,16 @@ public class TimerApp {
 
     }
 
+    //REQUIRES: When user is asked if they would like to add another task, they must input "yes" or "no"
     //MODIFIES: this
-    //EFFECTS:
+    //EFFECTS: User inputs name of task, timer type, times task should be repeated, and if user wants to add
+    //another task
     private void addTask() {
         Boolean addTaskRunning = true;
 
         Scanner input = new Scanner(System.in);
 
         while (addTaskRunning) {
-
             System.out.println("What is the name of the task that you want to add?");
             String taskNameInput = input.nextLine();
             System.out.println("What is the timer type? (Break or Work)");
@@ -90,26 +91,41 @@ public class TimerApp {
             Task task = new Task(taskNameInput, taskTimerInput, taskRepetitionInput);
             queue.addTask(task);
 
-            System.out.println("Would you like to add another task?");
+            System.out.println("Would you like to add another task? (yes or no)");
             String anotherTaskInput = input.nextLine();
 
             if (anotherTaskInput.equals("no") || anotherTaskInput.equals("No")) {
                 addTaskRunning = false;
             } else if (anotherTaskInput.equals("yes") || anotherTaskInput.equals("Yes")) {
                 addTaskRunning = true;
-            } else {
-                System.out.println("Yes or No?");
             }
+
         }
-        System.out.println("Done");
-        chosenOption();
+        runTimer();
     }
 
     //EFFECTS: Removes task from queue
     private void removeTask() {
         Boolean removeTaskRunning = true;
-        System.out.println("Which task would you like to remove?");
+        Scanner input = new Scanner(System.in);
 
+        while (removeTaskRunning) {
+            System.out.println("Which task would you like to remove?");
+            String taskNameInput = input.nextLine();
+            System.out.println("How many times would you like to remove this task?");
+            int numOfTimes = Integer.parseInt(input.nextLine());
+            queue.removeTask(taskNameInput, numOfTimes);
+
+            System.out.println("Would you like to remove another task? (yes or no)");
+            String anotherTaskInput = input.nextLine();
+
+            if (anotherTaskInput.equals("no") || anotherTaskInput.equals("No")) {
+                removeTaskRunning = false;
+            } else if (anotherTaskInput.equals("yes") || anotherTaskInput.equals("Yes")) {
+                removeTaskRunning = true;
+            }
+        }
+        runTimer();
     }
 
 

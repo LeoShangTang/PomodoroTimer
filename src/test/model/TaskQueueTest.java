@@ -62,6 +62,16 @@ public class TaskQueueTest {
     }
 
     @Test
+    public void testRetrieveRepetitions() {
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
+        assertEquals(1,q1.retrieveRepetitions("Math"));
+        assertEquals(2,q1.retrieveRepetitions("Youtube"));
+        assertEquals(5,q1.retrieveRepetitions("Science"));
+    }
+
+    @Test
     public void testGetIndexOfTask() {
         q1.addTask(t1);
         assertEquals(0,q1.getIndexOfTask("Math"));

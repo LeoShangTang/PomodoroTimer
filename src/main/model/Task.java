@@ -8,7 +8,7 @@ public class Task {
     // REQUIRES: getNumberOfTimes > 0, getTimerType must be a valid timer type
     // where valid timer types include "Break Timer" and "Study Timer"
     // EFFECTS: Constructs task with given timer type, task name,
-    // and number of times task is repeated
+    // and number of times task is repeated !!!
     public Task(String taskName, String timerType, int numberOfTimes) {
         this.taskName = taskName;
         this.timerType = timerType;

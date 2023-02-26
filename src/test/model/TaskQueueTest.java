@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskQueueTest {
 
@@ -86,6 +86,13 @@ public class TaskQueueTest {
         assertEquals(1,q2.getIndexOfTask("Math"));
         q2.addTask(t3);
         assertEquals(2,q2.getIndexOfTask("Science"));
+    }
+
+    @Test
+    public void testEmptyQueue() {
+        assertTrue(q1.emptyQueue());
+        q1.addTask(t1);
+        assertFalse(q1.emptyQueue());
     }
 
     @Test

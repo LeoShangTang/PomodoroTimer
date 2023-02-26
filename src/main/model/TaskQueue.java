@@ -37,7 +37,7 @@ public class TaskQueue {
         }
     }
 
-    //REQUIRES: task name must be a part of taskqueue
+    //REQUIRES: task name must be a part of taskQueue
     //EFFECT: Takes taskName and returns the getNumberOfTimes of task with taskName
     public int retrieveRepetitions(String taskName) {
         for (Task t : this.taskQueue) {
@@ -47,9 +47,8 @@ public class TaskQueue {
         }
         return 0;
     }
-
-    //REQUIRES: taskName must be a part of taskqueue
-    //EFFECT: Takes task name and returns index in taskqueue
+    //REQUIRES: taskName must be a part of taskQueue
+    //EFFECT: Takes task name and returns index in taskQueue
     public int getIndexOfTask(String task) {
         for (Task t : this.taskQueue) {
             if (t.getTaskName().equals(task)) {
@@ -59,11 +58,17 @@ public class TaskQueue {
         return 0;
     }
 
-    //EFFECT: Returns length of taskqueue
+    //EFFECT: Returns true if queue is empty and false otherwise
+    public boolean emptyQueue() {
+        return this.taskQueue.size() == 0;
+    }
+
+    //EFFECT: Returns length of taskQueue
     public int getQueueLength() {
         return this.taskQueue.size();
     }
 
+    //EFFECT: Returns taskQueue
     public LinkedList<Task> getTaskQueue() {
         return taskQueue;
     }

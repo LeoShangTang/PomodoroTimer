@@ -1,6 +1,7 @@
 
 package ui;
 
+import exceptions.InvalidOption;
 import model.Task;
 import model.TaskQueue;
 
@@ -10,15 +11,13 @@ public class TimerApp {
 
     private TaskQueue queue;
 
-    // EFFECT:
+    // EFFECT: Used to initialize queue and run timer from Main
     public TimerApp() {
-
         initQueue();
         runTimer();
-
     }
 
-    // EFFECT:
+    // EFFECT: Runs the timer by running instructions method and chosenOption method
     private void runTimer() {
         instructions();
         chosenOption();
@@ -36,62 +35,72 @@ public class TimerApp {
 
     }
 
+    //EFFECTS: Executes method according to user's input. When user types "Print Queue" or "pq", chosenOption
+    // executes the printQueue method. If user inputs invalid option, prints "Enter a valid option please"
     private void chosenOption() {
         boolean optionWindowRunning = true;
-        System.out.println("");
         Scanner input = new Scanner(System.in);
 
         while (optionWindowRunning) {
             String chosen = input.nextLine();
-            if (chosen.equals("Print Queue") || chosen.equals("pq")) {
-                System.out.println("Printing Queue");
-                printQueue();
-            } else if (chosen.equals("Add Task") || chosen.equals("at")) {
-                System.out.println("Adding Task");
-                addTask();
-                System.out.println("Done!");
-            } else if (chosen.equals("Remove Task") || chosen.equals("rt")) {
-                System.out.println("Removing Task");
-                removeTask();
-            } else if (chosen.equals("Repititions") || chosen.equals("r")) {
-                System.out.println("Retrieving repititions");
-                getRepititions();
-            } else if (chosen.equals("Quit") || chosen.equals("q")) {
-                System.out.print("Going back to menu");
-                optionWindowRunning = false;
-                runTimer();
-            } else {
+            try {
+                if (chosen.equals("Print Queue") || chosen.equals("pq")) {
+                    printQueue();
+                } else if (chosen.equals("Add Task") || chosen.equals("at")) {
+                    addTask();
+                    System.out.println("Done!");
+                } else if (chosen.equals("Remove Task") || chosen.equals("rt")) {
+                    removeTask();
+                } else if (chosen.equals("Repititions") || chosen.equals("r")) {
+                    getRepititions();
+                } else if (chosen.equals("Quit") || chosen.equals("q")) {
+                    optionWindowRunning = false;
+                } else {
+                    throw new InvalidOption();
+                }
+            } catch (InvalidOption e) {
                 System.out.println("Enter a valid option please");
             }
         }
     }
 
-    //EFFECTS: Prints the names of tasks in the queue
+    //EFFECTS: Prints the names of tasks in the queue. If queue is empty, print "Queue is empty"
     private void printQueue() {
-
-        for (Task t : queue.getTaskQueue()) {
-            System.out.print(t.getTaskName() + " ");
+        try {
+            if (queue.emptyQueue()) {
+                throw new InvalidOption();
+            }
+            System.out.print("Tasks Include: ");
+            for (Task t : queue.getTaskQueue()) {
+                System.out.print("[" + t.getTaskName() + "] ");
+            }
+            System.out.println("");
+        } catch (InvalidOption e) {
+            System.out.println("Queue is empty");
         }
-
     }
 
-    //REQUIRES: When user is asked if they would like to add another task, they must input "yes" or "no"
+    //REQUIRES: When user is asked if they would like to add another task, they must input "yes" or "no".
+    // User must enter "Break" or "Work" when they are asked the timer type. The user must enter an integer greater
+    // than 0 when asked the number of times a task should be repeated
     //MODIFIES: this
     //EFFECTS: User inputs name of task, timer type, times task should be repeated, and if user wants to add
-    //another task
+    //another task. Once User inputs task name, timer type, and number of repititions, the task is added to queue
     private void addTask() {
         Boolean addTaskRunning = true;
 
         Scanner input = new Scanner(System.in);
 
         while (addTaskRunning) {
+
             System.out.println("What is the name of the task that you want to add?");
             String taskNameInput = input.nextLine();
             System.out.println("What is the timer type? (Break or Work)");
             String taskTimerInput = input.nextLine();
+            assert (taskTimerInput.equals("Break") || taskTimerInput.equals("Work"));
             System.out.println("How many times should the task be repeated?");
             int taskRepetitionInput = Integer.valueOf(input.nextLine());
-
+            assert (taskRepetitionInput > 0);
             Task task = new Task(taskNameInput, taskTimerInput, taskRepetitionInput);
             queue.addTask(task);
 
@@ -103,13 +112,14 @@ public class TimerApp {
             } else if (anotherTaskInput.equals("yes") || anotherTaskInput.equals("Yes")) {
                 addTaskRunning = true;
             }
-
         }
         runTimer();
     }
 
+    //REQUIRES: task must be a member of queue
     //MODIFIES: this
-    //EFFECTS: Removes task from queue
+    //EFFECTS: User removes task from queue by typing name of task that they want to remove. User can remove task by
+    // specific number of repititions.
     private void removeTask() {
         Boolean removeTaskRunning = true;
         Scanner input = new Scanner(System.in);
@@ -128,11 +138,15 @@ public class TimerApp {
                 removeTaskRunning = false;
             } else if (anotherTaskInput.equals("yes") || anotherTaskInput.equals("Yes")) {
                 removeTaskRunning = true;
+            } else {
+                System.out.println("Invalid Input");
+                removeTaskRunning = false;
             }
         }
         runTimer();
     }
 
+    //REQUIRES: Task must be a member of the queue
     //EFFECTS: User inputs task and retrieves number of repititions in that task
     private void getRepititions() {
         Scanner input = new Scanner(System.in);
@@ -147,10 +161,5 @@ public class TimerApp {
     private void initQueue() {
         queue = new TaskQueue();
     }
-
-    private void initTask(String taskNameInput, String taskTimerInput, int taskRepetitionInput) {
-        Task task = new Task(taskNameInput, taskTimerInput, taskRepetitionInput);
-    }
-
 
 }

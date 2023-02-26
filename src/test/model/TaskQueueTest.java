@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskQueueTest {
@@ -69,6 +71,7 @@ public class TaskQueueTest {
         assertEquals(1,q1.retrieveRepetitions("Math"));
         assertEquals(2,q1.retrieveRepetitions("Youtube"));
         assertEquals(5,q1.retrieveRepetitions("Science"));
+        assertEquals(-1,q1.retrieveRepetitions("Among us"));
     }
 
     @Test
@@ -98,6 +101,7 @@ public class TaskQueueTest {
         assertEquals(1,q1.getIndexOfTask("Youtube"));
         q1.addTask(t3);
         assertEquals(2,q1.getIndexOfTask("Science"));
+        assertEquals(-1,q1.retrieveRepetitions("Balling"));
 
         q2.addTask(t2);
         assertEquals(0,q2.getIndexOfTask("Youtube"));
@@ -105,6 +109,7 @@ public class TaskQueueTest {
         assertEquals(1,q2.getIndexOfTask("Math"));
         q2.addTask(t3);
         assertEquals(2,q2.getIndexOfTask("Science"));
+        assertEquals(-1,q2.retrieveRepetitions("Among us"));
     }
 
     @Test
@@ -116,6 +121,17 @@ public class TaskQueueTest {
         assertEquals(2,q1.getQueueLength());
         q1.addTask(t3);
         assertEquals(3,q1.getQueueLength());
+    }
+
+    @Test
+    public void testGetTaskQueue() {
+        assertEquals(0,q1.getTaskQueue().size());
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
+        assertEquals(3,q1.getTaskQueue().size());
+        assertEquals(t1,q1.getTaskQueue().getFirst());
+        assertEquals(t3,q1.getTaskQueue().getLast());
     }
 
 

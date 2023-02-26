@@ -72,6 +72,25 @@ public class TaskQueueTest {
     }
 
     @Test
+    public void testMemberOfQueue() {
+        assertFalse(q1.memberOfQueue("Math"));
+        q1.addTask(t1);
+        assertTrue(q1.memberOfQueue("Math"));
+        assertFalse(q1.memberOfQueue("Science"));
+        q1.addTask(t2);
+        q1.addTask(t3);
+        assertTrue(q1.memberOfQueue("Science"));
+        assertFalse(q1.memberOfQueue("Among Us"));
+    }
+
+    @Test
+    public void testEmptyQueue() {
+        assertTrue(q1.emptyQueue());
+        q1.addTask(t1);
+        assertFalse(q1.emptyQueue());
+    }
+
+    @Test
     public void testGetIndexOfTask() {
         q1.addTask(t1);
         assertEquals(0,q1.getIndexOfTask("Math"));
@@ -86,13 +105,6 @@ public class TaskQueueTest {
         assertEquals(1,q2.getIndexOfTask("Math"));
         q2.addTask(t3);
         assertEquals(2,q2.getIndexOfTask("Science"));
-    }
-
-    @Test
-    public void testEmptyQueue() {
-        assertTrue(q1.emptyQueue());
-        q1.addTask(t1);
-        assertFalse(q1.emptyQueue());
     }
 
     @Test

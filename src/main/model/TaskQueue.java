@@ -45,8 +45,24 @@ public class TaskQueue {
                 return t.getNumberOfTimes();
             }
         }
-        return 0;
+        return -1;
     }
+
+    //EFFECT: Returns true if there is a task in Queue such that its name is equal to taskName
+    public boolean memberOfQueue(String taskName) {
+        for (Task t : this.taskQueue) {
+            if (t.getTaskName().equals(taskName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //EFFECT: Returns true if queue is empty and false otherwise
+    public boolean emptyQueue() {
+        return this.taskQueue.size() == 0;
+    }
+
     //REQUIRES: taskName must be a part of taskQueue
     //EFFECT: Takes task name and returns index in taskQueue
     public int getIndexOfTask(String task) {
@@ -56,11 +72,6 @@ public class TaskQueue {
             }
         }
         return 0;
-    }
-
-    //EFFECT: Returns true if queue is empty and false otherwise
-    public boolean emptyQueue() {
-        return this.taskQueue.size() == 0;
     }
 
     //EFFECT: Returns length of taskQueue

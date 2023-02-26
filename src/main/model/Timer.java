@@ -1,5 +1,7 @@
 package model;
 
+// DO NOT GRADE!!!! NOT DONE IMPLEMENTING TIMER OR TESTS!!!
+
 public class Timer {
 
     // constant times are in units of minutes

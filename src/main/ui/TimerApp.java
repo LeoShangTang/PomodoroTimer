@@ -127,6 +127,7 @@ public class TimerApp {
         while (removeTaskRunning) {
             System.out.println("Which task would you like to remove?");
             String taskNameInput = input.nextLine();
+            assert (queue.memberOfQueue(taskNameInput));
             System.out.println("How many times would you like to remove this task?");
             int numOfTimes = Integer.valueOf(input.nextLine());
             queue.removeTask(taskNameInput, numOfTimes);
@@ -152,6 +153,7 @@ public class TimerApp {
         Scanner input = new Scanner(System.in);
         System.out.println("Which task would you like to retrieve repititions?");
         String taskNameInput = input.nextLine();
+        assert (queue.memberOfQueue(taskNameInput));
         int result = queue.retrieveRepetitions(taskNameInput);
         System.out.println(result);
         runTimer();

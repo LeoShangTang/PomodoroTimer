@@ -12,14 +12,17 @@ so I hope to develop my own pomodoro timer application.
 
 **My application will include customization features including:**
 
+- Adding and removing customizable tasks in a queue connected to timer
 - Allow users to add tasks to a queue with timer type and task name
 - Change timer times for breaks and working periods
 - Change the number of work periods required in order to get a longer break
 - Change background colors and/or image
 - Change clock font
 
-**My application will also include basic clock functions including:**
+**My application will also include basic clock functions as well as queue functions including:**
 
+- Adding or removing tasks to a queue connected to the timer
+- When certain number of timers is done, connected task is removed from Queue
 - Pausing and resuming timers
 - Skipping timers
 - Switching from break to work timer and vice versa

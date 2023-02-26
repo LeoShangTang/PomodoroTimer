@@ -13,9 +13,9 @@ public class TaskTest {
 
     @BeforeEach
     public void beforeEach() {
-        t1 = new Task("Math","Work Timer",1);
-        t2 = new Task("Youtube","Break Timer",2);
-        t3 = new Task("Science","Work Timer",5);
+        t1 = new Task("Math","Work",1);
+        t2 = new Task("Youtube","Break",2);
+        t3 = new Task("Science","Work",5);
     }
 
     @Test
@@ -26,6 +26,13 @@ public class TaskTest {
         assertEquals(3,t2.getNumberOfTimes());
         t3.changeNumberOfTimes(1);
         assertEquals(1,t3.getNumberOfTimes());
+    }
+
+    @Test
+    public void testGetTimerType() {
+        assertEquals("Work",t1.getTimerType());
+        assertEquals("Break",t2.getTimerType());
+        assertEquals("Work",t3.getTimerType());
     }
 
 }

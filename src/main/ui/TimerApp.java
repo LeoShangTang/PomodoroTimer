@@ -1,6 +1,7 @@
 
 package ui;
 
+import exceptions.InvalidOption;
 import model.Task;
 import model.TaskQueue;
 

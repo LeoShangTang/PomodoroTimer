@@ -37,3 +37,8 @@ university students.
 - As a user, I want to be remove task at specific index in queue
 - As a user, I want to be able to change the number of times a task is repeated in the queue
 - As a user, I want to be able to see the number of times a certain task is being repeated in the queue
+- As a user, I want to be able to start a timer according/connected to a task in the queue
+- As a user, I want the number of times in a task to decrease by 1 once the corresponding timer has finished
+- As a user, I want to be able to pause a timer 
+- As a user, I want to be able to reset a timer 
+- As a user, I want to be able to change the time of a break and work timer

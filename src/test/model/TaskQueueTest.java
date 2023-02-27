@@ -95,7 +95,7 @@ public class TaskQueueTest {
 
     @Test
     public void testGetIndexOfTask() {
-        assertEquals(-1,q1.retrieveRepetitions("Balling"));
+        assertEquals(-1,q1.getIndexOfTask("Balling"));
         q1.addTask(t1);
         assertEquals(0,q1.getIndexOfTask("Math"));
         q1.addTask(t2);
@@ -110,7 +110,7 @@ public class TaskQueueTest {
         assertEquals(1,q2.getIndexOfTask("Math"));
         q2.addTask(t3);
         assertEquals(2,q2.getIndexOfTask("Science"));
-        assertEquals(-1,q2.retrieveRepetitions("Among us"));
+        assertEquals(-1,q2.getIndexOfTask("Among us"));
     }
 
     @Test

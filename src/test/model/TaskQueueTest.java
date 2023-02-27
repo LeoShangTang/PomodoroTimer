@@ -102,6 +102,7 @@ public class TaskQueueTest {
         assertEquals(1,q1.getIndexOfTask("Youtube"));
         q1.addTask(t3);
         assertEquals(2,q1.getIndexOfTask("Science"));
+        assertEquals(-1,q1.retrieveRepetitions("Economics"));
 
         q2.addTask(t2);
         assertEquals(0,q2.getIndexOfTask("Youtube"));

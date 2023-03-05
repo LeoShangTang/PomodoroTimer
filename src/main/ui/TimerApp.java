@@ -21,6 +21,7 @@ public class TimerApp {
     private void runTimer() {
         instructions();
         chosenOption();
+        chosenOptionTimerSettings();
     }
 
     // EFFECT: Prints instructions for user to follow
@@ -31,8 +32,19 @@ public class TimerApp {
         System.out.println("\t[Add Task] or [at] to add a task to Queue");
         System.out.println("\t[Remove Task] or [rt] to remove task in Queue");
         System.out.println("\t[Repititions] or [r] to retrieve number of times a task is being repeated");
-        System.out.println("\t[Quit] or [q]  to remove task in Queue");
+        System.out.println("\t[Timer Settings] or [ts] to change timer settings");
+        System.out.println("\t[Start Timer] or [st] to start and resume timer");
+        System.out.println("\t[Pause Timer] or [pt] to pause timer");
+        System.out.println("\t[Reset Timer] or [rt] to reset timer");
+        System.out.println("\t[Quit] or [q]  to quit");
 
+    }
+
+    // EFFECT: Prints out settings of the timer for user's to change
+    private void timerSettings() {
+        System.out.println("\nTimer Settings (do not include brackets):");
+        System.out.println("\t[Break Timer] or [bt] to change break timer time");
+        System.out.println("\t[Work Timer] or [wt] to change work timer time");
     }
 
     //EFFECTS: Executes method according to user's input. Example: When user types "Print Queue" or "pq", chosenOption
@@ -43,22 +55,41 @@ public class TimerApp {
 
         while (optionWindowRunning) {
             String chosen = input.nextLine();
-            try {
-                if (chosen.equals("Print Queue") || chosen.equals("pq")) {
-                    printQueue();
-                } else if (chosen.equals("Add Task") || chosen.equals("at")) {
-                    addTask();
-                    System.out.println("Done!");
-                } else if (chosen.equals("Remove Task") || chosen.equals("rt")) {
-                    removeTask();
-                } else if (chosen.equals("Repititions") || chosen.equals("r")) {
-                    getRepititions();
-                } else if (chosen.equals("Quit") || chosen.equals("q")) {
-                    optionWindowRunning = false;
-                } else {
-                    throw new InvalidOption();
-                }
-            } catch (InvalidOption e) {
+            if (chosen.equals("Print Queue") || chosen.equals("pq")) {
+                printQueue();
+            } else if (chosen.equals("Add Task") || chosen.equals("at")) {
+                addTask();
+            } else if (chosen.equals("Remove Task") || chosen.equals("rt")) {
+                removeTask();
+            } else if (chosen.equals("Repititions") || chosen.equals("r")) {
+                getRepititions();
+            } else if (chosen.equals("Timer Settings") || chosen.equals("ts")) {
+                timerSettings();
+            } else if (chosen.equals("Start Timer") || chosen.equals("st")) {
+                startOrResumeTimer();
+            } else if (chosen.equals("Pause Timer") || chosen.equals("pt")) {
+                pauseTimer();
+            } else if (chosen.equals("Quit") || chosen.equals("q")) {
+                optionWindowRunning = false;
+            } else {
+                System.out.println("Enter a valid option please");
+            }
+        }
+    }
+
+    private void chosenOptionTimerSettings() {
+        boolean optionTimerWindowRunning = true;
+        Scanner input = new Scanner(System.in);
+
+        while (optionTimerWindowRunning) {
+            String chosen = input.nextLine();
+            if (chosen.equals("Break Timer") || chosen.equals("bt")) {
+                changeBreakTimer();
+            } else if (chosen.equals("Work TImer") || chosen.equals("wt")) {
+                changeWorkTimer();
+            } else if (chosen.equals("Quit") || chosen.equals("q")) {
+                optionTimerWindowRunning = false;
+            } else {
                 System.out.println("Enter a valid option please");
             }
         }
@@ -164,6 +195,29 @@ public class TimerApp {
 
         System.out.println(queue.retrieveRepetitions(taskNameInput));
         runTimer();
+    }
+
+    // REQUIRES: User must input a number > 0
+    // EFFECT: Changes the amount of time for break timer
+    private void changeBreakTimer() {
+
+    }
+
+    // REQUIRES: User must input a number > 0
+    // EFFECT: Changes the amount of time for work timer
+    private void changeWorkTimer() {
+
+    }
+
+    // REQUIRES: Can only start one timer at a time. To start another timer, the current timer must be reset or skipped
+    // EFFECT: Starts or resumes timer that is currently running
+    private void startOrResumeTimer() {
+
+    }
+
+    // EFFECT: Pauses timer
+    private void pauseTimer() {
+
     }
 
     //EFFECTS: Initializes queue

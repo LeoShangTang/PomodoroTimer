@@ -10,10 +10,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// Tests data reader
 // ADAPTED FROM: JsonSerializationDemo
 public class JsonReaderTest {
+
     @Test
-    void testReaderNotRealFile() {
+    void testReaderInvalidFile() {
         JsonReader reader = new JsonReader("./data/ImInYourWalls.json");
         try {
             TaskQueue tq = reader.read();
@@ -35,7 +37,7 @@ public class JsonReaderTest {
     }
 
     @Test
-    void testReaderGeneralWorkRoom() {
+    void testReaderGeneralTaskQueue() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralTaskQueue.json");
         try {
             TaskQueue tq = reader.read();
@@ -48,7 +50,7 @@ public class JsonReaderTest {
             assertEquals("Work",tasks.get(1).getTimerType());
             assertEquals(5,tasks.get(1).getNumberOfTimes());
         } catch (IOException e) {
-            fail("Couldn't read from file");
+            fail("File could not be read");
         }
     }
 }

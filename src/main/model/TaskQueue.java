@@ -8,6 +8,7 @@ import persistence.Writable;
 
 import java.util.LinkedList;
 
+// TaskQueue is a list or queue of tasks
 public class TaskQueue implements Writable {
     private LinkedList<Task> taskQueue;
 

@@ -1,19 +1,30 @@
 
 package ui;
 
-import exceptions.InvalidOption;
+import exceptions.NegativeNumberOrZero;
+import exceptions.OptionNotInList;
 import model.Task;
 import model.TaskQueue;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
+// Class where task queue and timer are performed
 public class TimerApp {
 
+    private static final String JSON_STORE = "./data/taskqueue.json";
     private TaskQueue queue;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECT: Used to initialize queue and run timer from Main
     public TimerApp() {
-        initQueue();
+        queue = new TaskQueue();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runTimer();
     }
 
@@ -21,7 +32,6 @@ public class TimerApp {
     private void runTimer() {
         instructions();
         chosenOption();
-        chosenOptionTimerSettings();
     }
 
     // EFFECT: Prints instructions for user to follow
@@ -32,10 +42,8 @@ public class TimerApp {
         System.out.println("\t[Add Task] or [at] to add a task to Queue");
         System.out.println("\t[Remove Task] or [rt] to remove task in Queue");
         System.out.println("\t[Repititions] or [r] to retrieve number of times a task is being repeated");
-        System.out.println("\t[Timer Settings] or [ts] to change timer settings");
-        System.out.println("\t[Start Timer] or [st] to start and resume timer");
-        System.out.println("\t[Pause Timer] or [pt] to pause timer");
-        System.out.println("\t[Reset Timer] or [rt] to reset timer");
+        System.out.println("\t[Save] or [s] to save queue data to files");
+        System.out.println("\t[Load] or [l] to load saved data to program");
         System.out.println("\t[Quit] or [q]  to quit");
 
     }
@@ -49,10 +57,10 @@ public class TimerApp {
 
     //EFFECTS: Executes method according to user's input. Example: When user types "Print Queue" or "pq", chosenOption
     // executes the printQueue method. If user inputs invalid option, prints "Enter a valid option please"
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     private void chosenOption() {
         boolean optionWindowRunning = true;
         Scanner input = new Scanner(System.in);
-
         while (optionWindowRunning) {
             String chosen = input.nextLine();
             if (chosen.equals("Print Queue") || chosen.equals("pq")) {
@@ -65,10 +73,10 @@ public class TimerApp {
                 getRepititions();
             } else if (chosen.equals("Timer Settings") || chosen.equals("ts")) {
                 timerSettings();
-            } else if (chosen.equals("Start Timer") || chosen.equals("st")) {
-                startOrResumeTimer();
-            } else if (chosen.equals("Pause Timer") || chosen.equals("pt")) {
-                pauseTimer();
+            } else if (chosen.equals("Save") || chosen.equals("s")) {
+                saveTaskQueue();
+            } else if (chosen.equals("Load") || chosen.equals("l")) {
+                loadTaskQueue();
             } else if (chosen.equals("Quit") || chosen.equals("q")) {
                 optionWindowRunning = false;
             } else {
@@ -97,17 +105,14 @@ public class TimerApp {
 
     //EFFECTS: Prints the names of tasks in the queue. If queue is empty, print "Queue is empty"
     private void printQueue() {
-        try {
-            if (queue.emptyQueue()) {
-                throw new InvalidOption();
-            }
+        if (queue.emptyQueue()) {
+            System.out.println("Queue is empty");
+        } else {
             System.out.print("Tasks Include: ");
             for (Task t : queue.getTaskQueue()) {
                 System.out.print("[" + t.getTaskName() + "] ");
             }
             System.out.println("");
-        } catch (InvalidOption e) {
-            System.out.println("Queue is empty");
         }
     }
 
@@ -129,18 +134,18 @@ public class TimerApp {
 
             System.out.println("What is the timer type? (Break or Work)");
             String taskTimerInput = input.nextLine();
-            assert (taskTimerInput.equals("Break") || taskTimerInput.equals("Work"));
+            //assert (taskTimerInput.equals("Break") || taskTimerInput.equals("Work"));
 
             System.out.println("How many times should the task be repeated?");
             int numOfTimes = Integer.valueOf(input.nextLine());
-            assert (numOfTimes > 0);
+            //assert (numOfTimes > 0);
 
             Task task = new Task(taskNameInput, taskTimerInput, numOfTimes);
             queue.addTask(task);
 
             System.out.println("Would you like to add another task? (Yes or No)");
             String anotherTaskInput = input.nextLine();
-            assert (anotherTaskInput.equals("Yes") || anotherTaskInput.equals("No"));
+            //assert (anotherTaskInput.equals("Yes") || anotherTaskInput.equals("No"));
 
             if (anotherTaskInput.equals("No")) {
                 addTaskRunning = false;
@@ -161,27 +166,42 @@ public class TimerApp {
         Scanner input = new Scanner(System.in);
 
         while (removeTaskRunning) {
+            removeTaskRunning = removeTaskProcessing(removeTaskRunning, input);
+        }
+        runTimer();
+    }
+
+    // EFFECTS: Helper function for removeTask()
+    private Boolean removeTaskProcessing(Boolean removeTaskRunning, Scanner input) {
+        try {
             System.out.println("Which task would you like to remove?");
             String taskNameInput = input.nextLine();
-            assert (queue.memberOfQueue(taskNameInput));
+            //assert (queue.memberOfQueue(taskNameInput));
 
             System.out.println("How many times would you like to remove this task?");
             int numOfTimes = Integer.valueOf(input.nextLine());
-            assert (numOfTimes > 0);
+            //assert (numOfTimes > 0);
 
             queue.removeTask(taskNameInput, numOfTimes);
 
             System.out.println("Would you like to remove another task? (Yes or No)");
             String anotherTaskInput = input.nextLine();
-            assert (anotherTaskInput.equals("Yes") || anotherTaskInput.equals("No"));
+            //assert (anotherTaskInput.equals("Yes") || anotherTaskInput.equals("No"));
 
             if (anotherTaskInput.equals("No")) {
                 removeTaskRunning = false;
             } else if (anotherTaskInput.equals("Yes")) {
                 removeTaskRunning = true;
             }
+        } catch (OptionNotInList e) {
+            System.out.println("Invalid Option");
+            removeTaskRunning = false;
+
+        } catch (NegativeNumberOrZero e) {
+            System.out.println("Invalid number");
+            removeTaskRunning = false;
         }
-        runTimer();
+        return removeTaskRunning;
     }
 
     //REQUIRES: Task must be a member of the queue
@@ -191,32 +211,41 @@ public class TimerApp {
 
         System.out.println("Which task would you like to retrieve repititions?");
         String taskNameInput = input.nextLine();
-        assert (queue.memberOfQueue(taskNameInput));
+        //assert (queue.memberOfQueue(taskNameInput));
 
         System.out.println(queue.retrieveRepetitions(taskNameInput));
         runTimer();
     }
 
-    // REQUIRES: User must input a number > 0
-    // EFFECT: Changes the amount of time for break timer
+    private void saveTaskQueue() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(queue);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+            System.out.println("Remember to load for next time!");
+            runTimer();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadTaskQueue() {
+        try {
+            queue = jsonReader.read();
+            System.out.println("Loaded previously saved data from: " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
     private void changeBreakTimer() {
 
     }
 
-    // REQUIRES: User must input a number > 0
-    // EFFECT: Changes the amount of time for work timer
     private void changeWorkTimer() {
-
-    }
-
-    // REQUIRES: Can only start one timer at a time. To start another timer, the current timer must be reset or skipped
-    // EFFECT: Starts or resumes timer that is currently running
-    private void startOrResumeTimer() {
-
-    }
-
-    // EFFECT: Pauses timer
-    private void pauseTimer() {
 
     }
 

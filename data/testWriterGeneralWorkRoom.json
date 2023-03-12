@@ -1,0 +1,19 @@
+{
+  "taskQueue": [
+    {
+      "timerType": "Break",
+      "taskName": "Among Us",
+      "numberOfTimes": 12
+    },
+    {
+      "timerType": "Work",
+      "taskName": "Math",
+      "numberOfTimes": 3
+    },
+    {
+      "timerType": "Work",
+      "taskName": "CPSC 210 MT2",
+      "numberOfTimes": 100
+    }
+  ]
+}

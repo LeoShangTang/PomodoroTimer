@@ -1,6 +1,10 @@
 package model;
 
-public class Task {
+import org.json.JSONObject;
+import persistence.Writable;
+
+// Task object has a name, timer type, and are repeated for certain number of times
+public class Task implements Writable {
     private String taskName;
     private String timerType;
     private int numberOfTimes;
@@ -36,5 +40,14 @@ public class Task {
     // EFFECTS: Returns timer type
     public int getNumberOfTimes() {
         return numberOfTimes;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("taskName", taskName);
+        json.put("numberOfTimes", numberOfTimes);
+        json.put("timerType", timerType);
+        return json;
     }
 }

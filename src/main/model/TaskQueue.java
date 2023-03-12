@@ -1,8 +1,14 @@
 package model;
 
+import exceptions.NegativeNumberOrZero;
+import exceptions.OptionNotInList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.LinkedList;
 
-public class TaskQueue {
+public class TaskQueue implements Writable {
     private LinkedList<Task> taskQueue;
 
     // EFFECTS: Constructs task queue
@@ -18,13 +24,18 @@ public class TaskQueue {
         this.taskQueue.addLast(task);
     }
 
-    // REQUIRES: numOfTimes < number of times that the task and taskName to be a valid taskName in list
     // MODIFIES: this, Task
     // EFFECTS: Removes numOfTimes by how many times the task is
     // being repeated in the Queue. If numOfTimes is equivalent or greater to
     // the number of times that the task is being repeated, remove task
     // from queue completely
-    public void removeTask(String taskName, int numOfTimes) {
+    public void removeTask(String taskName, int numOfTimes) throws NegativeNumberOrZero, OptionNotInList {
+        if (!memberOfQueue(taskName)) {
+            throw new OptionNotInList();
+        }
+        if (numOfTimes <= 0) {
+            throw new NegativeNumberOrZero();
+        }
         for (Task t : this.taskQueue) {
             if (t.getTaskName().equals(taskName)) {
                 if (numOfTimes >= t.getNumberOfTimes()) {
@@ -81,5 +92,22 @@ public class TaskQueue {
     //EFFECT: Returns taskQueue
     public LinkedList<Task> getTaskQueue() {
         return this.taskQueue;
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("taskQueue", taskToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray taskToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Task task : taskQueue) {
+            jsonArray.put(task.toJson());
+        }
+
+        return jsonArray;
     }
 }

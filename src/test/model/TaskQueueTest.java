@@ -1,12 +1,13 @@
 package model;
 
+import exceptions.NegativeNumberOrZero;
+import exceptions.OptionNotInList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests taskQueue class
 public class TaskQueueTest {
 
     Task t1 = new Task("Math","Work Timer",1);
@@ -36,7 +37,7 @@ public class TaskQueueTest {
     }
 
     @Test
-    public void testRemoveTask() {
+    public void testRemoveTask() throws NegativeNumberOrZero, OptionNotInList {
         q1.addTask(t1);
         q1.addTask(t2);
         q1.addTask(t3);
@@ -133,6 +134,86 @@ public class TaskQueueTest {
         assertEquals(3,q1.getTaskQueue().size());
         assertEquals(t1,q1.getTaskQueue().getFirst());
         assertEquals(t3,q1.getTaskQueue().getLast());
+    }
+
+    @Test
+    public void taskContainsAndPositive() {
+        // No exceptions thrown and expecting taskQueue size to be 2 after removing full task
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
+        try {
+            q1.removeTask("Math",1);
+        } catch (NegativeNumberOrZero e) {
+            fail("Detected number to be negative when shouldn't have");
+        } catch (OptionNotInList e) {
+            fail("Option not in list when it should be in list");
+        }
+        assertTrue(q1.getQueueLength() == 2);
+    }
+
+    @Test
+    public void taskContainsAndNegative() {
+        // NegativeNumberOrZero exception thrown and expecting taskQueue size to be 3
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
+        try {
+            q1.removeTask("Math",-1);
+        } catch (NegativeNumberOrZero e) {
+            // caught as expected
+        } catch (OptionNotInList e) {
+            fail("Option not in list when it should be in list");
+        }
+        assertTrue(q1.getQueueLength() == 3);
+    }
+
+    @Test
+    public void taskContainsAndZero() {
+        // NegativeNumberOrZero exception thrown and expecting taskQueue size to be 3
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
+        try {
+            q1.removeTask("Math",0);
+        } catch (NegativeNumberOrZero e) {
+            // caught as expected
+        } catch (OptionNotInList e) {
+            fail("Option not in list when it should be in list");
+        }
+        assertTrue(q1.getQueueLength() == 3);
+    }
+
+    @Test
+    public void taskNotContainsAndPositive() {
+        // OptionNotInList exception thrown and expecting taskQueue size to be 3
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
+        try {
+            q1.removeTask("AmongUs",1);
+        } catch (NegativeNumberOrZero e) {
+            fail("Detected number to be negative when shouldn't have");
+        } catch (OptionNotInList e) {
+            // caught as expected
+        }
+        assertTrue(q1.getQueueLength() == 3);
+    }
+
+    @Test
+    public void taskNotContainsAndNegative() {
+        // OptionNotInList exception thrown and expecting taskQueue size to be 3
+        q1.addTask(t1);
+        q1.addTask(t2);
+        q1.addTask(t3);
+        try {
+            q1.removeTask("AmongUs",-1);
+        } catch (NegativeNumberOrZero e) {
+            fail("Detected number to be negative when shouldn't have");
+        } catch (OptionNotInList e) {
+            // caught as expected
+        }
+        assertTrue(q1.getQueueLength() == 3);
     }
 
 

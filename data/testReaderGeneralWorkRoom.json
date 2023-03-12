@@ -1,0 +1,14 @@
+{
+    "taskQueue": [
+        {
+          "timerType": "Break",
+          "taskName": "Youtube",
+          "numberOfTimes": 2
+        },
+        {
+          "timerType": "Work",
+          "taskName": "Science",
+          "numberOfTimes": 5
+        }
+    ]
+}

@@ -217,21 +217,24 @@ public class TimerApp {
         runTimer();
     }
 
+    // EFFECTS: saves the workroom to file
+    // ADAPTED FROM: JsonSerializationDemo
     private void saveTaskQueue() {
         try {
             jsonWriter.open();
             jsonWriter.write(queue);
             jsonWriter.close();
-            System.out.println("Saved to " + JSON_STORE);
-            System.out.println("Remember to load for next time!");
+            System.out.println("Saved to: " + JSON_STORE);
+            System.out.println("Remember to load your data after you quit the program");
             runTimer();
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            System.out.println("Unable to save data to file: " + JSON_STORE);
         }
     }
 
     // MODIFIES: this
     // EFFECTS: loads workroom from file
+    // ADAPTED FROM: JsonSerializationDemo
     private void loadTaskQueue() {
         try {
             queue = jsonReader.read();

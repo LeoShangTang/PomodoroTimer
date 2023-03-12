@@ -94,13 +94,16 @@ public class TaskQueue implements Writable {
         return this.taskQueue;
     }
 
+    @Override
+    // ADAPTED FROM: JsonSerializationDemo
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("taskQueue", taskToJson());
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns tasks in this workroom as a JSON array
+    // ADAPTED FROM: JsonSerializationDemo
     private JSONArray taskToJson() {
         JSONArray jsonArray = new JSONArray();
 

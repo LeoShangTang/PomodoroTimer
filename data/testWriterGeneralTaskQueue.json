@@ -1,0 +1,12 @@
+{"taskQueue": [
+    {
+        "timerType": "Work",
+        "taskName": "Art",
+        "numberOfTimes": 4
+    },
+    {
+        "timerType": "Break",
+        "taskName": "Badminton",
+        "numberOfTimes": 2
+    }
+]}

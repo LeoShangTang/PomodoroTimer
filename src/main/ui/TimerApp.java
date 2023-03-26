@@ -28,7 +28,7 @@ public class TimerApp {
         initializeTimer(25,0);
         initializeJsonWriter();
         initializeJsonReader();
-        runApp();
+        //runApp();
     }
 
     // EFFECT: Runs the timer by running instructions method and chosenOption method

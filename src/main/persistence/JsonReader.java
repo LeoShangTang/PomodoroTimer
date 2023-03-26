@@ -40,7 +40,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses taskqueue from JSON object and returns it
     private TaskQueue parseTaskQueue(JSONObject jsonObject) {
         TaskQueue tq = new TaskQueue();
         addTasks(tq, jsonObject);

@@ -41,7 +41,7 @@ public class JsonWriterTest {
             tq = reader.read();
             assertEquals(0, tq.getQueueLength());
         } catch (IOException e) {
-            fail("Exception should not have been thrown");
+            fail("Exception unexpectedly thrown");
         }
     }
 
@@ -68,7 +68,7 @@ public class JsonWriterTest {
             assertEquals(2,tasks.get(1).getNumberOfTimes());
 
         } catch (IOException e) {
-            fail("Exception should not have been thrown");
+            fail("Exception unexpectedly thrown");
         }
     }
 }

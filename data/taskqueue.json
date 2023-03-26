@@ -1,17 +1,17 @@
 {"taskQueue": [
     {
-        "timerType": "2",
+        "timerType": "1",
         "taskName": "1",
+        "numberOfTimes": 1
+    },
+    {
+        "timerType": "2",
+        "taskName": "2",
         "numberOfTimes": 2
     },
     {
         "timerType": "3",
-        "taskName": "2",
-        "numberOfTimes": 3
-    },
-    {
-        "timerType": "4",
         "taskName": "3",
-        "numberOfTimes": 4
+        "numberOfTimes": 3
     }
 ]}

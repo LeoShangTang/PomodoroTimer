@@ -3,6 +3,7 @@ package ui;
 
 import exceptions.NegativeNumberOrZero;
 import exceptions.OptionNotInList;
+import model.CountDownTimer;
 import model.Task;
 import model.TaskQueue;
 import persistence.JsonReader;
@@ -17,19 +18,21 @@ public class TimerApp {
 
     private static final String JSON_STORE = "./data/taskqueue.json";
     private TaskQueue queue;
+    private CountDownTimer countDownTimer;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
     // EFFECT: Used to initialize queue and run timer from Main
     public TimerApp() {
-        queue = new TaskQueue();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
-        runTimer();
+        initializeQueue();
+        initializeTimer(25,0);
+        initializeJsonWriter();
+        initializeJsonReader();
+        runApp();
     }
 
     // EFFECT: Runs the timer by running instructions method and chosenOption method
-    private void runTimer() {
+    private void runApp() {
         instructions();
         chosenOption();
     }
@@ -42,6 +45,8 @@ public class TimerApp {
         System.out.println("\t[Add Task] or [at] to add a task to Queue");
         System.out.println("\t[Remove Task] or [rt] to remove task in Queue");
         System.out.println("\t[Repititions] or [r] to retrieve number of times a task is being repeated");
+        System.out.println("\t[Start Timer] or [st] to start Timer");
+        System.out.println("\t[Get Time] or [gt] to retrieve time left on timer");
         System.out.println("\t[Save] or [s] to save queue data to files");
         System.out.println("\t[Load] or [l] to load saved data to program");
         System.out.println("\t[Quit] or [q]  to quit");
@@ -73,6 +78,10 @@ public class TimerApp {
                 getRepititions();
             } else if (chosen.equals("Timer Settings") || chosen.equals("ts")) {
                 timerSettings();
+            } else if (chosen.equals("Start timer") || chosen.equals("st")) {
+                startTimer();
+            } else if (chosen.equals("Get time") || chosen.equals("gt")) {
+                getTime();
             } else if (chosen.equals("Save") || chosen.equals("s")) {
                 saveTaskQueue();
             } else if (chosen.equals("Load") || chosen.equals("l")) {
@@ -153,7 +162,7 @@ public class TimerApp {
                 addTaskRunning = true;
             }
         }
-        runTimer();
+        runApp();
     }
 
     //REQUIRES: Task must be a member of queue. The user must enter an integer greater than 0 when asked the number of
@@ -168,7 +177,7 @@ public class TimerApp {
         while (removeTaskRunning) {
             removeTaskRunning = removeTaskProcessing(removeTaskRunning, input);
         }
-        runTimer();
+        runApp();
     }
 
     // EFFECTS: Helper function for removeTask()
@@ -214,7 +223,7 @@ public class TimerApp {
         //assert (queue.memberOfQueue(taskNameInput));
 
         System.out.println(queue.retrieveRepetitions(taskNameInput));
-        runTimer();
+        runApp();
     }
 
     // EFFECTS: saves the workroom to file
@@ -226,7 +235,7 @@ public class TimerApp {
             jsonWriter.close();
             System.out.println("Saved to: " + JSON_STORE);
             System.out.println("Remember to load your data after you quit the program");
-            runTimer();
+            runApp();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to save data to file: " + JSON_STORE);
         }
@@ -244,6 +253,19 @@ public class TimerApp {
         }
     }
 
+    public void startTimer() {
+        countDownTimer.countDown();
+        countDownTimer.startTimer();
+    }
+
+    private void getTime() {
+        if (countDownTimer.getSeconds() < 10) {
+            System.out.println("[" + countDownTimer.getMinutes() + ":" + "0" + (countDownTimer.getSeconds()) + "]");
+        } else {
+            System.out.println("[" + countDownTimer.getMinutes() + ":" + (countDownTimer.getSeconds()) + "]");
+        }
+    }
+
     private void changeBreakTimer() {
 
     }
@@ -253,8 +275,23 @@ public class TimerApp {
     }
 
     //EFFECTS: Initializes queue
-    private void initQueue() {
+    private void initializeQueue() {
         queue = new TaskQueue();
+    }
+
+    //EFFECTS: Initializes timer
+    private void initializeTimer(int minutes, int seconds) {
+        countDownTimer = new CountDownTimer(minutes,seconds);
+    }
+
+    //EFFECTS: Initializes JsonWriter
+    private void initializeJsonWriter() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+    }
+
+    //EFFECTS: Initializes JsonReader
+    private void initializeJsonReader() {
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
 }

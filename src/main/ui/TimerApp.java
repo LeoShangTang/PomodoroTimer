@@ -131,7 +131,7 @@ public class TimerApp {
     //MODIFIES: this
     //EFFECTS: User inputs name of task, timer type, times task should be repeated, and if user wants to add
     //another task. Once User inputs task name, timer type, and number of repititions, the task is added to queue
-    private void addTask() {
+    public void addTask() {
         Boolean addTaskRunning = true;
 
         Scanner input = new Scanner(System.in);
@@ -292,6 +292,10 @@ public class TimerApp {
     //EFFECTS: Initializes JsonReader
     private void initializeJsonReader() {
         jsonReader = new JsonReader(JSON_STORE);
+    }
+
+    public TaskQueue getTaskQueue() {
+        return queue;
     }
 
 }

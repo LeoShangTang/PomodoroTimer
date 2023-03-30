@@ -74,19 +74,4 @@ public class CountDownTimer {
         return minutes;
     }
 
-
-    //REQUIRES: 59 >= seconds >= 0 || seconds = 60 && minutes = 0
-    //MODIFIES: this
-    //EFFECTS: sets seconds to new value
-    public void setSeconds(int seconds) {
-        this.seconds = seconds;
-    }
-
-    //REQUIRES: 60 >= minutes >= 0
-    //MODIFIES: this
-    //EFFECTS: sets minutes to new value
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
-    }
-
 }

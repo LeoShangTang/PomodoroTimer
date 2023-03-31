@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
+// Pop up window to tell user that the timer has finished
 public class TimerDoneGui extends JFrame {
 
     private JPanel timerDonePanel;

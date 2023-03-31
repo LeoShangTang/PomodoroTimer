@@ -43,8 +43,6 @@ public class TimerAppGui extends JFrame {
 
     //EFFECT: Constructor for TimerAppGui which is run in main
     public TimerAppGui() {
-        initializeJsonWriter();
-        initializeJsonReader();
 
         taskQueue = new TaskQueue();
         addTaskGui = null;
@@ -66,10 +64,13 @@ public class TimerAppGui extends JFrame {
         showTasks();
         initSaveDataButton();
         initLoadDataButton();
+
+        initializeJsonWriter();
+        initializeJsonReader();
+
         checkMark = new ImageIcon("correct.png");
 
     }
-
 
 
     // EFFECTS: Initializes add button graphics. When add button is pressed, a new window opens where user
@@ -85,14 +86,18 @@ public class TimerAppGui extends JFrame {
     private void initRemoveTaskButton() {
         TimerAppGui timerAppGui = this;
         buttonSettings(removeTaskButton, false);
-        removeTaskButton.addActionListener(e -> new RemoveTaskGui(taskQueue,timerAppGui));
+        removeTaskButton.addActionListener(e -> new RemoveTaskGui(taskQueue, timerAppGui));
     }
 
+    // MODIFIES: this, JButton
+    //EFFECTS: initializes save data button and saves data
     private void initSaveDataButton() {
         buttonSettings(saveButton, true);
         saveButton.addActionListener(e -> saveTaskQueue());
     }
 
+    // MODIFIES: this, JButton
+    //EFFECTS: initializes load data button which loads previous saved data into table
     private void initLoadDataButton() {
         buttonSettings(loadDataButton, true);
         loadDataButton.addActionListener(e -> {
@@ -173,7 +178,8 @@ public class TimerAppGui extends JFrame {
         }
     }
 
-    //EFFECTS: Stops timer when timer is done which is when both seconds and minutes equal 0
+    //EFFECTS: Stops timer when timer is done which is when both seconds and minutes equal 0. TimerDoneGui window
+    // also pops up
     public void timerDone() {
         if (this.seconds == 0 && this.minutes == 0) {
             new TimerDoneGui();
@@ -242,7 +248,7 @@ public class TimerAppGui extends JFrame {
         });
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, JButton
     // EFFECTS: Initializes reset button graphics. When pressed, timer pauses. Label and time is
     // reset to the timer type time. When timer type is "Work", resets to 25 minutes. When timer type is  "Break",
     // resets to 5 minutes.
@@ -269,6 +275,7 @@ public class TimerAppGui extends JFrame {
         removeTaskButton.setBorderPainted(b);
     }
 
+    //MODIFIES: JPanel
     //EFFECTS: Initializes panel with title, size, visibility, and disposes on close
     private void initPanel() {
         setContentPane(mainJPanel);

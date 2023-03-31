@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 // DO NOT GRADE THIS FILE. I PLAN ON EITHER ADJUSTING THIS FOR LATER OR DELETING IT.
-// Class where task queue and timer are performed
+// Class where task queue and timer are performed -> DO NOT GRADE!!!
 public class TimerApp {
 
 

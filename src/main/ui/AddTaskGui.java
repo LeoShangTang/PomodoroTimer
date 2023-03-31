@@ -26,6 +26,8 @@ public class AddTaskGui extends JFrame {
         this.timerAppGui = timerAppGui;
     }
 
+    //MODIFIES: this, TaskQueue
+    //REQUIRES: repititions > 0
     //EFFECTS: When ok button is pressed, user inputs are constructed as a new task object before being added
     // to taskQueue. TimerAppGui displays updated table and AddTaskGui window is disposed.
     private void initOkButton() {
@@ -39,6 +41,7 @@ public class AddTaskGui extends JFrame {
         });
     }
 
+    //EFFECTS: Initializes taskComboBox to include options "Work" and "Break" for user to pick
     private void initTaskComboBox() {
         String[] timerOptions = {"Work", "Break"};
         timerTypeComboBox.setModel(new DefaultComboBoxModel(timerOptions));

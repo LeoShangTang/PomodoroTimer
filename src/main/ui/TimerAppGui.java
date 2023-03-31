@@ -2,10 +2,16 @@ package ui;
 
 import model.Task;
 import model.TaskQueue;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 // Where main TimerApp window runs. Allows users to start, pause, and reset timer. Also allows user to change timer
 // type and add or remove tasks.
@@ -22,16 +28,24 @@ public class TimerAppGui extends JFrame {
     private JPanel mainJPanel;
     private JButton workButton;
     private JButton breakButton;
+    private JButton saveButton;
+    private JButton loadDataButton;
+
     private Timer timer;
     private int seconds;
     private int minutes;
     private AddTaskGui addTaskGui;
     private TaskQueue taskQueue;
-
     private String timerType;
+
+    private JsonWriter jsonWriter;
+    private static final String JSON_STORE = "./data/taskqueue.json";
+    private JsonReader jsonReader;
 
     //EFFECT: Constructor for TimerAppGui which is run in main
     public TimerAppGui() {
+        initializeJsonWriter();
+        initializeJsonReader();
 
         taskQueue = new TaskQueue();
         addTaskGui = null;
@@ -51,7 +65,10 @@ public class TimerAppGui extends JFrame {
 
         createTable();
         showTasks();
+        initSaveDataButton();
+        initLoadDataButton();
     }
+
 
 
     // EFFECTS: Initializes add button graphics. When add button is pressed, a new window opens where user
@@ -68,6 +85,53 @@ public class TimerAppGui extends JFrame {
         TimerAppGui timerAppGui = this;
         buttonSettings(removeTaskButton, false);
         removeTaskButton.addActionListener(e -> new RemoveTaskGui(taskQueue,timerAppGui));
+    }
+
+    private void initSaveDataButton() {
+        buttonSettings(saveButton, true);
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveTaskQueue();
+            }
+        });
+    }
+
+    private void initLoadDataButton() {
+        buttonSettings(loadDataButton, true);
+        loadDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadTaskQueue();
+                showTasks();
+            }
+        });
+    }
+
+    // EFFECTS: saves the workroom to file
+    // ADAPTED FROM: JsonSerializationDemo
+    private void saveTaskQueue() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(taskQueue);
+            jsonWriter.close();
+            System.out.println("Saved to: " + JSON_STORE);
+            System.out.println("Remember to load your data after you quit the program");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to save data to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    // ADAPTED FROM: JsonSerializationDemo
+    private void loadTaskQueue() {
+        try {
+            taskQueue = jsonReader.read();
+            System.out.println("Loaded previously saved data from: " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 
 
@@ -211,9 +275,21 @@ public class TimerAppGui extends JFrame {
     private void initPanel() {
         setContentPane(mainJPanel);
         setTitle("welcome");
-        setSize(500, 300);
+        setSize(600, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
+
+
+    //EFFECTS: Initializes JsonWriter
+    private void initializeJsonWriter() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+    }
+
+    //EFFECTS: Initializes JsonReader
+    private void initializeJsonReader() {
+        jsonReader = new JsonReader(JSON_STORE);
+    }
+
 
 }

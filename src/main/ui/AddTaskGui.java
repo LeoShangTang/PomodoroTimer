@@ -4,49 +4,54 @@ import model.Task;
 import model.TaskQueue;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+// Where AddTask window runs which is called from TimerAppGui. This window allows user to add tasks to the JTable in
+// the main window, TimerAppGui
 public class AddTaskGui extends JFrame {
 
     private JTextField taskNameText;
-    private JComboBox comboBox1;
+    private JComboBox timerTypeComboBox;
     private JTextField repititionsText;
     private JButton okButton;
     private JPanel addTaskPanel;
-    private TimerAppWindow timerApp;
+    private TaskQueue taskQueue;
+    private TimerAppGui timerAppGui;
 
-    public AddTaskGui() {
-        setContentPane(addTaskPanel);
-        setTitle("Add Task");
-        setSize(500, 300);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-        initComboBox1();
+    //EFFECTS: constructor for AddTaskGui. TaskQueue from TimerAppGui is passed in as well as TimerAppGui itself
+    public AddTaskGui(TaskQueue taskQueue, TimerAppGui timerAppGui) {
+        initPanel();
+        initTaskComboBox();
         initOkButton();
-        timerApp = new TimerAppWindow();
+        this.taskQueue = taskQueue;
+        this.timerAppGui = timerAppGui;
     }
 
+    //EFFECTS: When ok button is pressed, user inputs are constructed as a new task object before being added
+    // to taskQueue. TimerAppGui displays updated table and AddTaskGui window is disposed.
     private void initOkButton() {
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String timerType = (String) comboBox1.getSelectedItem();
-                int repititions = Integer.parseInt(repititionsText.getText());
-                String taskName = taskNameText.getText();
-                timerApp.addTask(new Task(timerType, taskName, repititions));
-            }
+        okButton.addActionListener(e -> {
+            String timerType = (String) timerTypeComboBox.getSelectedItem();
+            int repititions = Integer.parseInt(repititionsText.getText());
+            String taskName = taskNameText.getText();
+            taskQueue.addTask(new Task(taskName,timerType,repititions));
+            timerAppGui.showTasks();
+            dispose();
         });
     }
 
-    private void initComboBox1() {
+    private void initTaskComboBox() {
         String[] timerOptions = {"Work", "Break"};
-        comboBox1.setModel(new DefaultComboBoxModel(timerOptions));
+        timerTypeComboBox.setModel(new DefaultComboBoxModel(timerOptions));
     }
 
-
-    public TaskQueue getTaskQueue() {
-        return timerApp.getTaskQueue();
+    //EFFECTS: Initializes panel with title, size, visibility, and disposes on close
+    private void initPanel() {
+        setContentPane(addTaskPanel);
+        setTitle("Add Task");
+        setSize(400, 250);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setVisible(true);
     }
+
 
 }

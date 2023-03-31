@@ -1,88 +1,92 @@
 package ui;
 
 import model.Task;
+import model.TaskQueue;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+// Where main TimerApp window runs. Allows users to start, pause, and reset timer. Also allows user to change timer
+// type and add or remove tasks.
+// Adapted ideas from: https://www.youtube.com/watch?v=aIdIXsi1qTU
 public class TimerAppGui extends JFrame {
 
     private JButton resetButton;
     private JButton startButton;
     private JButton pauseButton;
     private JTable taskTable;
-    private JLabel label1;
+    private JLabel timerText;
     private JButton addTaskButton;
     private JButton removeTaskButton;
     private JPanel mainJPanel;
     private JButton workButton;
     private JButton breakButton;
-    private TimerApp timerApp;
     private Timer timer;
     private int seconds;
     private int minutes;
     private AddTaskGui addTaskGui;
+    private TaskQueue taskQueue;
 
     private String timerType;
 
+    //EFFECT: Constructor for TimerAppGui which is run in main
     public TimerAppGui() {
-       // taskQueue = new TaskQueue();
 
-//        Task task1 = new Task("Amongus","Break",2);
-//        Task task2 = new Task("Sad","Break",2);
-        timerApp = new TimerApp();
-        addTaskGui = new AddTaskGui();
+        taskQueue = new TaskQueue();
+        addTaskGui = null;
+
+        initPanel();
 
         initTimerLabel();
         initTimer();
-
-        setContentPane(mainJPanel);
-        setTitle("welcome");
-        setSize(500, 300);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-
+        initWorkButton();
+        initBreakButton();
         initStartButton();
         initPauseButton();
         initResetButton();
 
         initAddButton();
-        initWorkButton();
-        initBreakButton();
+        initRemoveTaskButton();
 
         createTable();
         showTasks();
     }
 
+
     // EFFECTS: Initializes add button graphics. When add button is pressed, a new window opens where user
     // can insert task to add
     private void initAddButton() {
-        addTaskButton.setContentAreaFilled(false);
-        addTaskButton.setFocusPainted(false);
-        addTaskButton.setBorderPainted(false);
-        addTaskButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addTaskGui = new AddTaskGui();
-                showTasks();
-            }
-        });
+        TimerAppGui timerAppGui = this;
+        buttonSettings(addTaskButton, false);
+        addTaskButton.addActionListener(e -> new AddTaskGui(taskQueue, timerAppGui));
     }
 
-    // EFFECTS: Sets up JTable with 3 columns includeing Task, timer type, and repititions
+    //EFFECTS: Initialize remove task button. When button is pressed, opens remove task gui window for user to remove
+    // task for a specific number of times
+    private void initRemoveTaskButton() {
+        TimerAppGui timerAppGui = this;
+        buttonSettings(removeTaskButton, false);
+        removeTaskButton.addActionListener(e -> new RemoveTaskGui(taskQueue,timerAppGui));
+    }
+
+
+    // MODIFIES: this, JTable
+    // EFFECTS: Sets up JTable with 3 columns including Task, timer type, and repititions.
+    // Adapted from https://www.youtube.com/watch?v=3m1j3PiUeVI and https://www.youtube.com/watch?v=teSBvFy9NH8
     public void createTable() {
         Object[][] data = {};
         taskTable.setModel(new DefaultTableModel(data, new String[]{"Task", "Timer Type", "Repititions"}));
     }
 
-    // EFFECTS: Displays tasks onto JTable by adding rows for each task in taskQueue
+    // MODIFIES: this, JTable
+    // EFFECTS: Displays tasks onto JTable by adding rows for each task in taskQueue. Before adding rows,
+    // table is reset to a row count of 0
+    // Adapted from https://www.youtube.com/watch?v=3m1j3PiUeVI
     public void showTasks() {
         DefaultTableModel model = (DefaultTableModel) taskTable.getModel();
-        for (Task task : addTaskGui.getTaskQueue().getTaskQueue()) {
+        model.setRowCount(0);
+        for (Task task : taskQueue.getTaskQueue()) {
             model.addRow(new Object[]{
                     task.getTaskName(),
                     task.getTimerType(),
@@ -91,16 +95,16 @@ public class TimerAppGui extends JFrame {
         }
     }
 
-    //MODIFIES: this
+    //MODIFIES: this, JLabel
     //EFFECTS:  Initializes timer label to 25 minutes
     private void initTimerLabel() {
-        label1.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
-        label1.setText("25:00");
+        timerText.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
+        timerText.setText("25:00");
     }
 
 
     //MODIFIES: this
-    //EFFECTS: When seconds reaches 0
+    //EFFECTS: When seconds reaches -1, seconds is set to 59 and we take away 1 minute
     public void secondsReachesZero() {
         if (this.seconds == -1) {
             this.seconds = 59;
@@ -115,113 +119,101 @@ public class TimerAppGui extends JFrame {
         }
     }
 
-
-    // EFFECTS: Initializes timer with staring time of 25 minutes with a countdown
+    // MODIFIES: this, JButton
+    // EFFECTS: Initializes timer with staring time of 25 minutes with a countdown of 1 second
     private void initTimer() {
         this.timerType = "Work";
         this.minutes = 25;
         this.seconds = 0;
-        timer = new Timer(1000, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                seconds--;
-                secondsReachesZero();
-                timerDone();
-                if (seconds < 10) {
-                    label1.setText(minutes + ":" + "0" + seconds);
-                } else {
-                    label1.setText(minutes + ":" + seconds);
-                }
-
+        timer = new Timer(1000, e -> {
+            seconds--;
+            secondsReachesZero();
+            timerDone();
+            if (seconds < 10) {
+                timerText.setText(minutes + ":" + "0" + seconds);
+            } else {
+                timerText.setText(minutes + ":" + seconds);
             }
+
         });
     }
 
-
+    // MODIFIES: JButton
     // EFFECTS: Initializes pause button graphics. When pressed, timer pauses.
     private void initPauseButton() {
-        pauseButton.setContentAreaFilled(false);
-        pauseButton.setFocusPainted(false);
-        pauseButton.setBorderPainted(true);
-        pauseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timer.stop();
-            }
-        });
+        buttonSettings(pauseButton, true);
+        pauseButton.addActionListener(e -> timer.stop());
     }
 
+    // MODIFIES: JButton
     // EFFECTS: Initializes start button graphics. When pressed, timer starts.
     private void initStartButton() {
-        startButton.setContentAreaFilled(false);
-        startButton.setFocusPainted(false);
-        startButton.setBorderPainted(true);
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timer.start();
-            }
-        });
+        buttonSettings(startButton, true);
+        startButton.addActionListener(e -> timer.start());
     }
 
+    // MODIFIES: this, JButton
     // EFFECTS: Initializes work button graphics. When work button is pressed, the timer type is set to work time
     // of 25 minutes and timer is reset and paused.
     private void initWorkButton() {
-        workButton.setContentAreaFilled(false);
-        workButton.setFocusPainted(false);
-        workButton.setBorderPainted(true);
-        workButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                minutes = 25;
-                seconds = 0;
-                timerType = "Work";
-                label1.setText(minutes + ":" + "0" + seconds);
-                timer.stop();
-            }
+        buttonSettings(workButton, true);
+        workButton.addActionListener(e -> {
+            minutes = 25;
+            seconds = 0;
+            timerType = "Work";
+            timerText.setText(minutes + ":" + "0" + seconds);
+            timer.stop();
         });
     }
 
+    // MODIFIES: this, JButton
     // EFFECTS: Initializes break button graphics. When break button is pressed, the timer type is set to break time
     // of 5 minutes and timer is reset and paused.
     private void initBreakButton() {
-        breakButton.setContentAreaFilled(false);
-        breakButton.setFocusPainted(false);
-        breakButton.setBorderPainted(true);
-        breakButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                minutes = 5;
-                seconds = 0;
-                timerType = "Break";
-                label1.setText(minutes + ":" + "0" + seconds);
-                timer.stop();
-            }
+        buttonSettings(breakButton, true);
+        breakButton.addActionListener(e -> {
+            minutes = 5;
+            seconds = 0;
+            timerType = "Break";
+            timerText.setText(minutes + ":" + "0" + seconds);
+            timer.stop();
         });
     }
+
+    // MODIFIES: this
     // EFFECTS: Initializes reset button graphics. When pressed, timer pauses. Label and time is
-    // reset to the timer type time.
+    // reset to the timer type time. When timer type is "Work", resets to 25 minutes. When timer type is  "Break",
+    // resets to 5 minutes.
     private void initResetButton() {
-        resetButton.setContentAreaFilled(false);
-        resetButton.setFocusPainted(false);
-        resetButton.setBorderPainted(false);
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (timerType.equals("Work")) {
-                    seconds = 0;
-                    minutes = 25;
-                } else {
-                    seconds = 0;
-                    minutes = 5;
-                }
-                label1.setText(minutes + ":" + "0" + seconds);
-                timer.stop();
+        buttonSettings(resetButton, false);
+        resetButton.addActionListener(e -> {
+            if (timerType.equals("Work")) {
+                seconds = 0;
+                minutes = 25;
+            } else {
+                seconds = 0;
+                minutes = 5;
             }
+            timerText.setText(minutes + ":" + "0" + seconds);
+            timer.stop();
         });
+    }
+
+    // MODIFIES: JButton
+    // EFFECTS: Sets up button setting with no color but has outline
+    private void buttonSettings(JButton removeTaskButton, boolean b) {
+        removeTaskButton.setContentAreaFilled(false);
+        removeTaskButton.setFocusPainted(false);
+        removeTaskButton.setBorderPainted(b);
+    }
+
+    //EFFECTS: Initializes panel with title, size, visibility, and disposes on close
+    private void initPanel() {
+        setContentPane(mainJPanel);
+        setTitle("welcome");
+        setSize(500, 300);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
 }

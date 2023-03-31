@@ -8,8 +8,6 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -41,6 +39,7 @@ public class TimerAppGui extends JFrame {
     private JsonWriter jsonWriter;
     private static final String JSON_STORE = "./data/taskqueue.json";
     private JsonReader jsonReader;
+    private ImageIcon checkMark;
 
     //EFFECT: Constructor for TimerAppGui which is run in main
     public TimerAppGui() {
@@ -67,6 +66,8 @@ public class TimerAppGui extends JFrame {
         showTasks();
         initSaveDataButton();
         initLoadDataButton();
+        checkMark = new ImageIcon("correct.png");
+
     }
 
 
@@ -89,22 +90,14 @@ public class TimerAppGui extends JFrame {
 
     private void initSaveDataButton() {
         buttonSettings(saveButton, true);
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveTaskQueue();
-            }
-        });
+        saveButton.addActionListener(e -> saveTaskQueue());
     }
 
     private void initLoadDataButton() {
         buttonSettings(loadDataButton, true);
-        loadDataButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadTaskQueue();
-                showTasks();
-            }
+        loadDataButton.addActionListener(e -> {
+            loadTaskQueue();
+            showTasks();
         });
     }
 
@@ -115,10 +108,11 @@ public class TimerAppGui extends JFrame {
             jsonWriter.open();
             jsonWriter.write(taskQueue);
             jsonWriter.close();
-            System.out.println("Saved to: " + JSON_STORE);
-            System.out.println("Remember to load your data after you quit the program");
+            JOptionPane.showMessageDialog(null,
+                    "Saved to: " + JSON_STORE, "Saved Data", JOptionPane.OK_OPTION, checkMark);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to save data to file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,
+                    "Unable to save data to file: " + JSON_STORE, "Not Saved", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -128,9 +122,12 @@ public class TimerAppGui extends JFrame {
     private void loadTaskQueue() {
         try {
             taskQueue = jsonReader.read();
-            System.out.println("Loaded previously saved data from: " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,
+                    "Loaded previously saved data from: " + JSON_STORE,
+                    "Saved Data", JOptionPane.OK_OPTION, checkMark);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,
+                    "Unable to read data from: " + JSON_STORE, "Not Saved", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -179,6 +176,7 @@ public class TimerAppGui extends JFrame {
     //EFFECTS: Stops timer when timer is done which is when both seconds and minutes equal 0
     public void timerDone() {
         if (this.seconds == 0 && this.minutes == 0) {
+            new TimerDoneGui();
             timer.stop();
         }
     }

@@ -48,9 +48,13 @@ public class RemoveTaskGui extends JFrame {
                 try {
                     taskQueue.removeTask(taskName,repititions);
                 } catch (OptionNotInList ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(null,
+                            "OPTION NOT IN LIST", "error", JOptionPane.ERROR_MESSAGE);
+
                 } catch (NegativeNumberOrZero ex) {
-                    throw new RuntimeException(ex);
+                    JOptionPane.showMessageDialog(null,
+                            "NEGATIVE VALUE INPUT", "error", JOptionPane.ERROR_MESSAGE);
+
                 }
                 timerAppGui.showTasks();
                 dispose();

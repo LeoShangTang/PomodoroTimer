@@ -42,8 +42,20 @@ university students.
 - As a user, I want to be able to see the number of times a certain task is being repeated in the queue
 - As a user, I want to be able to save my queue to file by choice
 - As a user, I want to be able to be able to load my queue from file by choice
-- As a user, I want to be able to start a timer according/connected to a task in the queue
-- As a user, I want the number of times in a task to decrease by 1 once the corresponding timer has finished
+- As a user, I want to be able to start a timer
 - As a user, I want to be able to pause a timer 
-- As a user, I want to be able to reset a timer 
-- As a user, I want to be able to change the time of a break and work timer
+- As a user, I want to be able to reset a timer
+- As a user, I want to be able to change from break timer to work timer
+
+
+## Instructions for grader
+
+- You can generate the first required action related to adding Xs to a Y by pressing the "plus" icon and type in the 
+task that you would like to add. The task should be added to a table.
+- You can generate the second required action related to adding Xs to a Y by pressing the "minus" icon and type in the 
+task that you would like to remove and the number of repititions. MAKE SURE THE NAME MATCHES EXACTLY.
+- You can locate my visual component by not only looking at the icons, but when the timer is done, a gif of a spinning
+skeleton head will appear saying timer is done. To speed up the process of this, you can edit **TimerAppGui initTimer**
+method and change _this.minutes = 25_ and _this.seconds = 0_ to _this.minutes = 0_ and _this.seconds = 5_
+- You can save the state of my application by pressing the save button
+- You can reload the state of my application by pressing the load data button

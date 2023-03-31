@@ -1,17 +1,12 @@
 {"taskQueue": [
     {
         "timerType": "Work",
-        "taskName": "2",
-        "numberOfTimes": 123123
+        "taskName": "asd",
+        "numberOfTimes": 2
     },
     {
         "timerType": "Work",
-        "taskName": "213",
-        "numberOfTimes": 123213213
-    },
-    {
-        "timerType": "Work",
-        "taskName": "browsing fb market",
-        "numberOfTimes": 9999
+        "taskName": "2231",
+        "numberOfTimes": 231321
     }
 ]}

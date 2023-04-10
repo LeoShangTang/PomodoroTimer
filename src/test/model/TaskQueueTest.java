@@ -34,6 +34,9 @@ public class TaskQueueTest {
         q1.addTask(t3);
         assertEquals(2,q1.getIndexOfTask("Science"));
         assertEquals(3,q1.getQueueLength());
+        q1.addTask(t1);
+        assertEquals(3,q1.getQueueLength());
+        assertEquals(2,t1.getNumberOfTimes());
     }
 
     @Test

@@ -1,17 +1,12 @@
 {"taskQueue": [
     {
-        "timerType": "Work",
-        "taskName": "asd",
-        "numberOfTimes": 2
+        "timerType": "Break",
+        "taskName": "Youtube",
+        "numberOfTimes": 1
     },
     {
         "timerType": "Work",
-        "taskName": "2231",
-        "numberOfTimes": 231321
-    },
-    {
-        "timerType": "Work",
-        "taskName": "asdwa",
-        "numberOfTimes": 222
+        "taskName": "Math",
+        "numberOfTimes": 12
     }
 ]}

@@ -8,6 +8,7 @@ import persistence.Writable;
 
 import java.util.LinkedList;
 
+// MAYBE USE THE SINGLETON DESIGN PATTERN
 // TaskQueue is a list or queue of tasks
 public class TaskQueue implements Writable {
     private LinkedList<Task> taskQueue;
@@ -17,13 +18,22 @@ public class TaskQueue implements Writable {
         this.taskQueue = new LinkedList<Task>();
     }
 
-    // REQUIRES: Queue cannot have a task with the same name
-    // as the task being added
+    // REQUIRES: When adding a task that already exists in the queue, the task must have the same timer type
     // MODIFIES: this
-    // EFFECTS: add task to the end of the queue
+    // EFFECTS: add task to the end of the queue. If task already exists in the queue, add the number of repetitions to
+    // the already existing task
     public void addTask(Task task) {
-        this.taskQueue.addLast(task);
+        if (!memberOfQueue(task.getTaskName())) {
+            this.taskQueue.addLast(task);
+        } else {
+            for (Task t : this.taskQueue) {
+                if (t.getTaskName().equals(task.getTaskName())) {
+                    t.changeNumberOfTimes(t.getNumberOfTimes() + task.getNumberOfTimes());
+                }
+            }
+        }
     }
+
 
     // MODIFIES: this, Task
     // EFFECTS: Removes numOfTimes by how many times the task is

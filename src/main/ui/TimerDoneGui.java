@@ -9,6 +9,7 @@ public class TimerDoneGui extends JFrame {
     private JPanel timerDonePanel;
     private JLabel timerDoneLabel;
 
+    //EFFECTS: Constructs TimerDoneGui
     public TimerDoneGui() {
         timerDoneLabel.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
         initPanel();
@@ -17,7 +18,7 @@ public class TimerDoneGui extends JFrame {
     //EFFECTS: Initializes panel with title, size, visibility, and disposes on close
     private void initPanel() {
         setContentPane(timerDonePanel);
-        setTitle("welcome");
+        setTitle("Timer Done");
         Dimension size = timerDonePanel.getPreferredSize();
         setSize(size);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

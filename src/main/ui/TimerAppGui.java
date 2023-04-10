@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Task;
 import model.TaskQueue;
 import persistence.JsonReader;
@@ -8,13 +10,17 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 // Where main TimerApp window runs. Allows users to start, pause, and reset timer. Also allows user to change timer
 // type and add or remove tasks.
 // Adapted ideas from: https://www.youtube.com/watch?v=aIdIXsi1qTU
-public class TimerAppGui extends JFrame {
+public class TimerAppGui extends JFrame implements WindowListener {
 
     private JButton resetButton;
     private JButton startButton;
@@ -28,6 +34,7 @@ public class TimerAppGui extends JFrame {
     private JButton breakButton;
     private JButton saveButton;
     private JButton loadDataButton;
+    private JButton settingsButton;
 
     private Timer timer;
     private int seconds;
@@ -47,6 +54,8 @@ public class TimerAppGui extends JFrame {
         taskQueue = new TaskQueue();
         addTaskGui = null;
 
+        addWindowListener(this);
+
         initPanel();
 
         initTimerLabel();
@@ -60,6 +69,8 @@ public class TimerAppGui extends JFrame {
         initAddButton();
         initRemoveTaskButton();
 
+        initSettingsButton();
+
         createTable();
         showTasks();
         initSaveDataButton();
@@ -69,7 +80,6 @@ public class TimerAppGui extends JFrame {
         initializeJsonReader();
 
         checkMark = new ImageIcon("correct.png");
-
     }
 
 
@@ -87,6 +97,18 @@ public class TimerAppGui extends JFrame {
         TimerAppGui timerAppGui = this;
         buttonSettings(removeTaskButton, false);
         removeTaskButton.addActionListener(e -> new RemoveTaskGui(taskQueue, timerAppGui));
+    }
+
+    // EFFECTS: Initializes add settings button graphics. When add setting button is pressed,
+    // a new window opens where user can print EventLog or Clear EventLog
+    private void initSettingsButton() {
+        buttonSettings(settingsButton, false);
+        settingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SettingsGui();
+            }
+        });
     }
 
     // MODIFIES: this, JButton
@@ -269,22 +291,37 @@ public class TimerAppGui extends JFrame {
 
     // MODIFIES: JButton
     // EFFECTS: Sets up button setting with no color but has outline
-    private void buttonSettings(JButton removeTaskButton, boolean b) {
-        removeTaskButton.setContentAreaFilled(false);
-        removeTaskButton.setFocusPainted(false);
-        removeTaskButton.setBorderPainted(b);
+    private void buttonSettings(JButton button, boolean b) {
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setBorderPainted(b);
     }
 
     //MODIFIES: JPanel
     //EFFECTS: Initializes panel with title, size, visibility, and disposes on close
     private void initPanel() {
         setContentPane(mainJPanel);
-        setTitle("welcome");
+        setTitle("Pomodoro Timer");
         setSize(600, 500);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
+    //EFFECT: When window is closed, play welcome window known as WelcomeGui
+    @Override
+    public void windowOpened(WindowEvent e) {
+        new WelcomeGui();
+    }
+
+    //EFFECT: When window is closed, print out the Event log into the console
+    @Override
+    public void windowClosing(WindowEvent e) {
+        String logEventText = "";
+        for (Event next : EventLog.getInstance()) {
+            logEventText +=  next.getDate() + "  -> " + next.getDescription() + System.lineSeparator();
+        }
+        System.out.println(logEventText);
+    }
 
     //EFFECTS: Initializes JsonWriter
     private void initializeJsonWriter() {
@@ -297,4 +334,33 @@ public class TimerAppGui extends JFrame {
     }
 
 
+    //EFFECT: Window closes like default. Action possibly to be added later.
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    //EFFECT: Window iconfined like default. Action possibly to be added later.
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    //EFFECT: Window deiconfined like default. Action possibly to be added later.
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    //EFFECT: Window activated like default. Action possibly to be added later.
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    //EFFECT: Window deactivated like default. Action possibly to be added later.
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

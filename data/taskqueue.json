@@ -1,12 +1,17 @@
 {"taskQueue": [
     {
         "timerType": "Break",
-        "taskName": "Youtube",
+        "taskName": "EdSheeran",
+        "numberOfTimes": 150
+    },
+    {
+        "timerType": "Break",
+        "taskName": "LunchBreak",
         "numberOfTimes": 1
     },
     {
         "timerType": "Work",
-        "taskName": "Math",
-        "numberOfTimes": 12
+        "taskName": "1122",
+        "numberOfTimes": 222
     }
 ]}

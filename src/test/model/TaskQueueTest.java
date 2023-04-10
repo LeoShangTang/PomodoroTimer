@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Tests taskQueue class
+// Tests for TaskQueue class
 public class TaskQueueTest {
 
     Task t1 = new Task("Math","Work Timer",1);

@@ -5,6 +5,7 @@ import java.util.Date;
 
 
 // Represents a TaskQueue Event
+// ADAPTED FROM: AlarmSystem
 public class Event {
     private static final int HASH_CONSTANT = 13;
     private Date dateLogged;

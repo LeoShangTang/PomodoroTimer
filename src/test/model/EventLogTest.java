@@ -9,45 +9,45 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Unit tests for the EventLog class
- */
+// Tests for EventLog class
+// ADAPTED FROM: AlarmSystem
 public class EventLogTest {
-	private Event e1;
-	private Event e2;
-	private Event e3;
+
+	private Event event1;
+	private Event event2;
+	private Event event3;
 	
 	@BeforeEach
 	public void loadEvents() {
-		e1 = new Event("A1");
-		e2 = new Event("A2");
-		e3 = new Event("A3");
-		EventLog el = EventLog.getInstance();
-		el.logEvent(e1);
-		el.logEvent(e2);
-		el.logEvent(e3);
+		event1 = new Event("AmongUs1");
+		event2 = new Event("AmongUs2");
+		event3 = new Event("AmongUs3");
+		EventLog eventLog = EventLog.getInstance();
+		eventLog.logEvent(event1);
+		eventLog.logEvent(event2);
+		eventLog.logEvent(event3);
 	}
 	
 	@Test
 	public void testLogEvent() {	
-		List<Event> l = new ArrayList<Event>();
+		List<Event> log = new ArrayList<Event>();
 		
-		EventLog el = EventLog.getInstance();
-		for (Event next : el) {
-			l.add(next);
+		EventLog eventLog = EventLog.getInstance();
+		for (Event next : eventLog) {
+			log.add(next);
 		}
 		
-		assertTrue(l.contains(e1));
-		assertTrue(l.contains(e2));
-		assertTrue(l.contains(e3));
+		assertTrue(log.contains(event1));
+		assertTrue(log.contains(event2));
+		assertTrue(log.contains(event3));
 	}
 
 	@Test
 	public void testClear() {
-		EventLog el = EventLog.getInstance();
-		el.clear();
-		Iterator<Event> itr = el.iterator();
-		assertTrue(itr.hasNext());   // After log is cleared, the clear log event is added
+		EventLog eventLog = EventLog.getInstance();
+		eventLog.clear();
+		Iterator<Event> itr = eventLog.iterator();
+		assertTrue(itr.hasNext());
 		assertEquals("Event log cleared.", itr.next().getDescription());
 		assertFalse(itr.hasNext());
 	}

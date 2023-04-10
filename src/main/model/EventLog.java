@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 
 // Represents a log of taskQueue events and implements logEvents
+// ADAPTED FROM: AlarmSystem
 public class EventLog implements Iterable<Event> {
 
     private static EventLog theLog;

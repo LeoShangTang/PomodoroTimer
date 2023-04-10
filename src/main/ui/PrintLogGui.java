@@ -23,7 +23,8 @@ public class PrintLogGui extends JFrame {
     public void printLog(EventLog el) {
         String eventLogText = "";
         for (Event next : el) {
-            eventLogText += displayText.getText() + next.getDate() + "  -> " + next.getDescription() + System.lineSeparator();
+            eventLogText += displayText.getText() + next.getDate() + "  -> " + next.getDescription()
+                    + System.lineSeparator();
         }
         displayText.setText(eventLogText);
     }

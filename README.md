@@ -46,6 +46,8 @@ university students.
 - As a user, I want to be able to pause a timer 
 - As a user, I want to be able to reset a timer
 - As a user, I want to be able to change from break timer to work timer
+- As a user, I want to be able to get a log of events by choice
+- As a user, I want to be able to clear a lof of events by choice
 
 
 ## Instructions for grader
@@ -59,3 +61,24 @@ skeleton head will appear saying timer is done. To speed up the process of this,
 method and change _this.minutes = 25_ and _this.seconds = 0_ to _this.minutes = 0_ and _this.seconds = 5_
 - You can save the state of my application by pressing the save button
 - You can reload the state of my application by pressing the load data button
+- 
+## Phase 4: Task 2
+
+- We add a new task called task1 with name "Math", is Work Timer, and has 3 repititions
+  - The Event log should print the time, saying that task Math has been added
+
+- We add a task with the same name called task2 with name "Math", is Work Timer, and has 4 repititions
+  - The Event log should print the time, saying that Math had an increase in repititions
+
+- We remove some repetitions where we remove Math by 2 repititions. It should have 5 repititions remaining.
+  - The Event log should print the time, saying that Math had removed some repititions
+
+- We remove repetitions completely where we remove Math by 10 repititions. It should have 0 repititions remaining.
+  - The Event log should print the time, saying that the task Math has been removed
+
+**Example seen below**
+
+- Wed Apr 12 16:08:21 PDT 2023  ->  Added task: Math
+- Wed Apr 12 16:08:26 PDT 2023  ->  Added repititions: Math
+- Wed Apr 12 16:08:31 PDT 2023  ->  Removed repititions: Math
+- Wed Apr 12 16:08:37 PDT 2023  ->  Removed task: Math

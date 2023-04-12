@@ -64,21 +64,19 @@ method and change _this.minutes = 25_ and _this.seconds = 0_ to _this.minutes = 
 - 
 ## Phase 4: Task 2
 
-- We add a new task called task1 with name "Math", is Work Timer, and has 3 repititions
-  - The Event log should print the time, saying that task Math has been added
-
-- We add a task with the same name called task2 with name "Math", is Work Timer, and has 4 repititions
-  - The Event log should print the time, saying that Math had an increase in repititions
-
-- We remove some repetitions where we remove Math by 2 repititions. It should have 5 repititions remaining.
-  - The Event log should print the time, saying that Math had removed some repititions
-
-- We remove repetitions completely where we remove Math by 10 repititions. It should have 0 repititions remaining.
-  - The Event log should print the time, saying that the task Math has been removed
-
 **Example seen below**
 
-- Wed Apr 12 16:08:21 PDT 2023  ->  Added task: Math
-- Wed Apr 12 16:08:26 PDT 2023  ->  Added repititions: Math
-- Wed Apr 12 16:08:31 PDT 2023  ->  Removed repititions: Math
-- Wed Apr 12 16:08:37 PDT 2023  ->  Removed task: Math
+- Wed Apr 12 16:21:25 PDT 2023  ->  Added task: Math
+- Wed Apr 12 16:21:31 PDT 2023  ->  Added 4 repititions: Math
+- Wed Apr 12 16:21:39 PDT 2023  ->  Removed 2 repititions: Math
+- Wed Apr 12 16:21:45 PDT 2023  ->  Removed task: Math
+- Wed Apr 12 16:21:49 PDT 2023  ->  Added task: Science
+- Wed Apr 12 16:21:58 PDT 2023  ->  Added task: Youtube
+- Wed Apr 12 16:22:05 PDT 2023  ->  Added 2 repititions: Science
+- Wed Apr 12 16:22:11 PDT 2023  ->  Added 1 repititions: Youtube
+- Wed Apr 12 16:22:15 PDT 2023  ->  Removed 2 repititions: Youtube
+- Wed Apr 12 16:22:22 PDT 2023  ->  Added 21 repititions: Science
+- Wed Apr 12 16:22:29 PDT 2023  ->  Removed 41 repititions: Science
+- Wed Apr 12 16:22:34 PDT 2023  ->  Removed task: Science
+
+

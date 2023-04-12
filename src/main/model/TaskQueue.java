@@ -30,7 +30,8 @@ public class TaskQueue implements Writable {
             for (Task t : this.taskQueue) {
                 if (t.getTaskName().equals(task.getTaskName())) {
                     t.changeNumberOfTimes(t.getNumberOfTimes() + task.getNumberOfTimes());
-                    EventLog.getInstance().logEvent(new Event(" Added repititions: " + task.getTaskName()));
+                    EventLog.getInstance().logEvent(new Event(" Added " + task.getNumberOfTimes()
+                            + " repititions: " + task.getTaskName()));
                 }
             }
         }
@@ -57,7 +58,8 @@ public class TaskQueue implements Writable {
                     break;
                 } else {
                     t.changeNumberOfTimes(t.getNumberOfTimes() - numOfTimes);
-                    EventLog.getInstance().logEvent(new Event(" Removed repititions: " + taskName));
+                    EventLog.getInstance().logEvent(new Event(" Removed "
+                            + numOfTimes + " repititions: " + taskName));
                 }
             }
         }

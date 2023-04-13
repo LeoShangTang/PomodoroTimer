@@ -47,7 +47,7 @@ university students.
 - As a user, I want to be able to reset a timer
 - As a user, I want to be able to change from break timer to work timer
 - As a user, I want to be able to get a log of events by choice
-- As a user, I want to be able to clear a lof of events by choice
+- As a user, I want to be able to clear a log of events by choice
 
 
 ## Instructions for grader
@@ -80,3 +80,20 @@ method and change _this.minutes = 25_ and _this.seconds = 0_ to _this.minutes = 
 - Wed Apr 12 16:22:34 PDT 2023  ->  Removed task: Science
 
 
+## Phase 4: Task 3
+- I definitely feel that I could have added more abstract classes and interfaces to increase cohesion. 
+A good example can be adding an abstract class or interface among all the gui classes. 
+A really repetitive code that I saw was the "initPanel" method and "initButton" method across all  the guis, which could have
+been refactored into an interface before the guis implemented it.
+- A possible pattern that I could have implemented was the singleton pattern within the
+TaskQueue class. In phase 3 of the project when we were using guis, I had issues
+making sure that the same TaskQueue object was being passed around the different windows/guis. 
+To keep the same TaskQueue object, I passed TaskQueue as a parameter to the other classes, and these classes would
+alter the TaskQueue. However, a far more easy solution could have been making TaskQueue a singleton pattern to ensure that the same
+object was being passed around. 
+- Another area where I could have implemented the singleton pattern was the TimerAppGui.
+Whenever the AddTaskGui or RemoveTaskGui opened and the user inputted their values, the table in the TimerAppGui was unable to
+update their values without an inefficient solution like adding a refresh button. Instead, I passed the TimerAppGui itself into
+the AddTaskGui and RemoveTaskGui windows so that whenever the windows were done their adding or removing tasks,
+TimerAppGui could be called to update the information. Instead, I could have used the singleton pattern so that I would not have
+to pass TimerAppGui itself into AddTaskGui and RemoveTaskGui. 

@@ -22,37 +22,36 @@ import java.io.IOException;
 // Adapted ideas from: https://www.youtube.com/watch?v=aIdIXsi1qTU
 public class TimerAppGui extends JFrame implements WindowListener {
 
-    private JButton resetButton;
-    private JButton startButton;
-    private JButton pauseButton;
+
     private JTable taskTable;
+    private ImageIcon checkMark;
     private JLabel timerText;
-    private JButton addTaskButton;
-    private JButton removeTaskButton;
     private JPanel mainJPanel;
     private JButton workButton;
     private JButton breakButton;
     private JButton saveButton;
     private JButton loadDataButton;
     private JButton settingsButton;
+    private JButton addTaskButton;
+    private JButton removeTaskButton;
+    private JButton resetButton;
+    private JButton startButton;
+    private JButton pauseButton;
 
     private Timer timer;
+    private TaskQueue taskQueue;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    private static final String JSON_STORE = "./data/taskqueue.json";
     private int seconds;
     private int minutes;
-    private AddTaskGui addTaskGui;
-    private TaskQueue taskQueue;
     private String timerType;
-
-    private JsonWriter jsonWriter;
-    private static final String JSON_STORE = "./data/taskqueue.json";
-    private JsonReader jsonReader;
-    private ImageIcon checkMark;
 
     //EFFECT: Constructor for TimerAppGui which is run in main
     public TimerAppGui() {
 
         taskQueue = new TaskQueue();
-        addTaskGui = null;
 
         addWindowListener(this);
 

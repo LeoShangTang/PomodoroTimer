@@ -14,9 +14,10 @@ import java.awt.event.ActionListener;
 public class RemoveTaskGui extends JFrame {
 
     private JTextField taskNameText;
-    private JPanel removeTaskPanel;
     private JTextField repititionsText;
+    private JPanel removeTaskPanel;
     private JButton okButton;
+
     private TimerAppGui timerAppGui;
     private TaskQueue taskQueue;
 

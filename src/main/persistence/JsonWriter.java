@@ -9,6 +9,7 @@ import java.io.*;
 // ADAPTED FROM: JsonSerializationDemo
 // Writer that writes JSON data that represents taskQueue to a file
 public class JsonWriter {
+
     private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;

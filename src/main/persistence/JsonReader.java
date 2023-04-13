@@ -12,8 +12,9 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // ADAPTED FROM: JsonSerializationDemo
-// Reads taskqueue from JSON data stored in file
+// Reads taskQueue from JSON data stored in file
 public class JsonReader {
+
     private String source;
 
     // EFFECTS: constructs reader to read from source file

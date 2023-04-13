@@ -10,10 +10,11 @@ import javax.swing.*;
 public class AddTaskGui extends JFrame {
 
     private JTextField taskNameText;
-    private JComboBox timerTypeComboBox;
     private JTextField repititionsText;
+    private JComboBox timerTypeComboBox;
     private JButton okButton;
     private JPanel addTaskPanel;
+
     private TaskQueue taskQueue;
     private TimerAppGui timerAppGui;
 

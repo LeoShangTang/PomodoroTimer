@@ -8,7 +8,6 @@ import javax.swing.*;
 // Pop up window that displays the EventLog
 public class PrintLogGui extends JFrame {
 
-
     private JPanel logScreenPanel;
     private JTextArea displayText;
 

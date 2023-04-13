@@ -6,9 +6,10 @@ import javax.swing.*;
 
 // Pop up settings window that allows user to print or clear eventLog
 public class SettingsGui extends JFrame {
+
     private JButton printLogToScreenButton;
-    private JPanel settingsPanel;
     private JButton clearLogButton;
+    private JPanel settingsPanel;
 
     //EFFECTS: Constructs SettingsGui
     public SettingsGui() {

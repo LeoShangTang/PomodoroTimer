@@ -5,6 +5,7 @@ import java.awt.*;
 
 // Pop up welcome window that greets the user
 public class WelcomeGui extends JFrame {
+
     private JPanel welcomePanel;
 
     //EFFECTS: Constructs welcomePanel

@@ -11,6 +11,7 @@ import java.util.LinkedList;
 // MAYBE USE THE SINGLETON DESIGN PATTERN
 // TaskQueue is a list or queue of tasks
 public class TaskQueue implements Writable {
+
     private LinkedList<Task> taskQueue;
 
     // EFFECTS: Constructs task queue
